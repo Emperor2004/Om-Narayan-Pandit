@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import type { ContactFormData } from "@/types";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,19 +18,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: "Invalid email address." }, { status: 400 });
     }
 
-    // Nodemailer transporter (Gmail)
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_FROM,
-        pass: process.env.EMAIL_APP_PASSWORD,
-      },
-    });
-
     // Email to you
-    await transporter.sendMail({
-      from: `"Portfolio Contact" <${process.env.EMAIL_FROM}>`,
-      to: process.env.EMAIL_TO,
+    await resend.emails.send({
+      from: "Portfolio Contact <onboarding@resend.dev>",
+      to: process.env.EMAIL_TO!,
       replyTo: email,
       subject: `[Portfolio] ${subject}`,
       html: `
@@ -45,8 +38,8 @@ export async function POST(req: NextRequest) {
     });
 
     // Auto-reply to sender
-    await transporter.sendMail({
-      from: `"Om Narayan Pandit" <${process.env.EMAIL_FROM}>`,
+    await resend.emails.send({
+      from: "Om Narayan Pandit <onboarding@resend.dev>",
       to: email,
       subject: `Thanks for reaching out, ${name}!`,
       html: `
