@@ -4,11 +4,10 @@ A full-stack, production-grade personal portfolio built with **Next.js 14** + **
 
 ## 🚀 Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Animations**: CSS + Custom Hooks (Framer Motion ready)
-- **Email**: Nodemailer (Gmail)
+- **Styling**: Tailwind CSS + CSS Variables
+- **Email**: Resend API
 - **Theme**: next-themes (Dark/Light toggle)
 - **Deployment**: Vercel (free tier)
 
@@ -18,44 +17,44 @@ A full-stack, production-grade personal portfolio built with **Next.js 14** + **
 src/
 ├── app/
 │   ├── page.tsx                  # Homepage
-│   ├── layout.tsx                # Root layout + fonts + theme
-│   ├── globals.css               # Global styles + CSS variables
+│   ├── layout.tsx                # Root layout + fonts + SEO metadata
+│   ├── globals.css               # Global styles + CSS variables + animations
 │   ├── blog/
-│   │   ├── page.tsx              # Blog listing
-│   │   └── [slug]/page.tsx       # Blog post detail
+│   │   ├── page.tsx              # Blog listing page
+│   │   └── [slug]/page.tsx       # Individual blog post page
 │   ├── admin/
-│   │   └── page.tsx              # Admin panel (login + CRUD)
+│   │   └── page.tsx              # Admin dashboard (login + CRUD)
 │   └── api/
-│       ├── contact/route.ts      # Contact form email API
+│       ├── contact/route.ts      # Contact form API (Resend email)
 │       ├── projects/route.ts     # Projects CRUD API
 │       ├── publications/route.ts # Publications CRUD API
 │       └── blog/route.ts         # Blog posts CRUD API
 ├── components/
 │   ├── layout/
-│   │   ├── Navbar.tsx            # Responsive nav + theme toggle
+│   │   ├── Navbar.tsx            # Responsive navbar + theme toggle
 │   │   └── Footer.tsx
 │   ├── sections/
-│   │   ├── HeroSection.tsx       # Animated hero + typewriter
+│   │   ├── HeroSection.tsx       # Animated hero + typewriter effect
 │   │   ├── StatsBar.tsx          # Animated counters
 │   │   ├── AboutSection.tsx      # Bio + skill tags
-│   │   ├── ProjectsSection.tsx   # Project cards with glow
+│   │   ├── ProjectsSection.tsx   # Project cards with mouse glow
 │   │   ├── PublicationsSection.tsx
 │   │   ├── BlogSection.tsx       # Blog post previews
-│   │   ├── EducationSection.tsx  # Timeline + achievements
+│   │   ├── EducationSection.tsx  # Timeline + achievements grid
 │   │   └── ContactSection.tsx    # Contact form
 │   ├── ui/
-│   │   ├── Button.tsx            # Button + LinkButton
+│   │   ├── Button.tsx            # Button + LinkButton variants
 │   │   ├── Badge.tsx             # Badge + TechPill
 │   │   ├── SectionHeader.tsx     # Consistent section headers
-│   │   └── Reveal.tsx            # Scroll-reveal wrapper
+│   │   └── Reveal.tsx            # Scroll-reveal animation wrapper
 │   └── effects/
-│       ├── NeuralCanvas.tsx      # Particle/node canvas
-│       ├── CustomCursor.tsx      # Custom cursor + trail
-│       └── ScrollProgress.tsx    # Scroll progress bar
+│       ├── NeuralCanvas.tsx      # Interactive particle/node canvas
+│       ├── CustomCursor.tsx      # Custom cursor + trail effect
+│       └── ScrollProgress.tsx    # Scroll progress bar at top
 ├── data/
-│   └── index.ts                  # All content (projects, pubs, blog, etc.)
+│   └── index.ts                  # All content — projects, publications, blog, skills
 ├── hooks/
-│   └── index.ts                  # useScrollReveal, useCounter, etc.
+│   └── index.ts                  # useScrollReveal, useCounter, useCardMouseGlow, etc.
 ├── lib/
 │   └── utils.ts                  # cn(), formatDate, statusConfig, etc.
 └── types/
@@ -72,23 +71,19 @@ npm install
 
 ### 2. Set Up Environment Variables
 
-```bash
-cp .env.local.example .env.local
-```
+Create a `.env.local` file in the root of the project:
 
-Edit `.env.local`:
-```
-EMAIL_FROM=your.gmail@gmail.com
-EMAIL_TO=your.gmail@gmail.com
-EMAIL_APP_PASSWORD=xxxx xxxx xxxx xxxx   # Gmail App Password
+```dotenv
+RESEND_API_KEY=re_xxxxxxxxxxxxxxxxx
+EMAIL_TO=your.email@gmail.com
 ADMIN_PASSWORD=your_secure_password
-JWT_SECRET=random_32_char_string
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
+NEXT_PUBLIC_SITE_URL=https://your-project.vercel.app
 ```
 
-**Getting a Gmail App Password:**
-1. Go to myaccount.google.com → Security → 2-Step Verification
-2. Scroll down → App passwords → Generate one for "Mail"
+**Getting your Resend API key:**
+1. Sign up free at [resend.com](https://resend.com)
+2. Dashboard → API Keys → Create Key
+3. Paste it into `.env.local`
 
 ### 3. Run Development Server
 
@@ -98,65 +93,72 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000)
 
-**Admin Panel**: [http://localhost:3000/admin](http://localhost:3000/admin)
+**Admin Panel** → [http://localhost:3000/admin](http://localhost:3000/admin)
 
-## 📝 Customizing Content
+## ✏️ Customizing Your Content
 
-All your personal content is in **`src/data/index.ts`**:
-- `projects[]` — Edit/add your projects
-- `publications[]` — Add your papers
-- `blogPosts[]` — Write blog posts (Markdown supported)
-- `achievements[]` — Update your achievements
-- `timeline[]` — Edit your education/experience
-- `stats[]` — Update stats numbers
+All personal content lives in **`src/data/index.ts`**. Edit it directly:
 
-Or use the **Admin Panel** at `/admin` for live editing.
+| Export | What it controls |
+|---|---|
+| `projects[]` | Your project cards |
+| `publications[]` | Research papers |
+| `blogPosts[]` | Blog articles (Markdown supported) |
+| `achievements[]` | Achievements grid |
+| `timeline[]` | Education & experience |
+| `skillCategories[]` | Skills cloud |
+| `stats[]` | Hero stats numbers |
 
-## 🌐 Deploy to Vercel
+Or use the **Admin Panel** at `/admin` for live editing without touching code.
 
+## 🌐 Deploying to Vercel
+
+### Option A — Vercel CLI
 ```bash
-# Install Vercel CLI
 npm i -g vercel
-
-# Deploy
 vercel
-
-# Or just push to GitHub and connect at vercel.com
 ```
 
-**Add Environment Variables in Vercel Dashboard:**
-Settings → Environment Variables → Add all keys from `.env.local`
+### Option B — GitHub (recommended)
+1. Push your project to a GitHub repository
+2. Go to [vercel.com](https://vercel.com) → Import Project → Select your repo
+3. Add environment variables in **Settings → Environment Variables**
+4. Deploy ✅
 
-### Custom Domain (Free)
-Vercel provides `your-project.vercel.app` for free.
-For a custom domain, add it in Vercel Dashboard → Domains.
+**Environment variables to add in Vercel dashboard:**
+```
+RESEND_API_KEY
+EMAIL_TO
+ADMIN_PASSWORD
+NEXT_PUBLIC_SITE_URL
+```
 
 ## 🔐 Admin Panel
 
-Access at `/admin` with your `ADMIN_PASSWORD`.
+Access at `/admin` using your `ADMIN_PASSWORD`.
 
-Features:
-- ✅ Add/Edit/Delete Projects
-- ✅ Add/Edit/Delete Publications
-- ✅ Write/Edit/Delete Blog Posts (Markdown)
-- ✅ Toggle post published/draft status
+| Feature | Description |
+|---|---|
+| Projects | Add, edit, delete project cards |
+| Publications | Manage research papers and status |
+| Blog | Write, edit, publish/unpublish posts |
 
-> **Note**: The in-memory store resets on server restart. For production persistence, replace the API routes' in-memory arrays with a real database. Recommended: **Supabase** (free PostgreSQL) or **Prisma + SQLite**.
-
-## 🎨 Customization
-
-- **Colors**: Edit CSS variables in `globals.css` (`:root`)
-- **Fonts**: Change in `app/layout.tsx` (next/font/google)
-- **Animations**: Modify `tailwind.config.ts` keyframes
-- **Sections**: Each section is a standalone component in `src/components/sections/`
+> **Note**: The API uses an in-memory store — data resets on server restart. For permanent persistence, replace the in-memory arrays in the API routes with a real database. Recommended: **Supabase** (free PostgreSQL) or **PlanetScale**.
 
 ## 📧 Contact Form
 
-Uses **Nodemailer + Gmail**. Sends:
-1. Email to you with the message
-2. Auto-reply to the sender
+Powered by **Resend** (free tier: 100 emails/day).
 
-For production, consider **Resend** or **SendGrid** for better deliverability.
+- Sends a notification email to you when someone submits the form
+- Sends an auto-reply to the person who contacted you
+
+## 🎨 Customization Tips
+
+- **Your info**: Edit `src/data/index.ts`
+- **Colors**: Change CSS variables in `src/app/globals.css` under `:root`
+- **Fonts**: Swap fonts in `src/app/layout.tsx` (uses `next/font/google`)
+- **Sections**: Each section is a standalone component in `src/components/sections/`
+- **Social links**: Update hrefs in `src/components/sections/ContactSection.tsx` and `src/components/layout/Footer.tsx`
 
 ---
 
