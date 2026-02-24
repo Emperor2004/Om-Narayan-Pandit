@@ -10,8 +10,8 @@ export function Footer() {
         </p>
         <div className="flex items-center gap-6">
           {[
-            { href: "https://github.com/omnarayanpandit", label: "GitHub" },
-            { href: "https://linkedin.com/in/omnarayanpandit", label: "LinkedIn" },
+            { href: "https://github.com/Emperor2004", label: "GitHub" },
+            { href: "www.linkedin.com/in/om-narayan-pandit", label: "LinkedIn" },
             { href: "https://twitter.com/omnarayanpandit", label: "Twitter" },
           ].map((l) => (
             <a

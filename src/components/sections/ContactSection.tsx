@@ -42,8 +42,8 @@ export function ContactSection() {
   };
 
   const socials = [
-    { label: "GitHub", href: "https://github.com/omnarayanpandit", icon: "⟡" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/omnarayanpandit", icon: "⟡" },
+    { label: "GitHub", href: "https://github.com/Emperor2004", icon: "⟡" },
+    { label: "LinkedIn", href: "www.linkedin.com/in/om-narayan-pandit", icon: "⟡" },
     { label: "Google Scholar", href: "#", icon: "⟡" },
     { label: "Twitter / X", href: "#", icon: "⟡" },
     { label: "Download CV", href: "/cv.pdf", icon: "⟡" },
