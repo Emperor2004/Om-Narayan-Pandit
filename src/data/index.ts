@@ -92,6 +92,29 @@ export const projects: Project[] = [
 
 export const publications: Publication[] = [
   {
+    "id": "plant-disease-dl-patent-2025",
+    "title": "System and Method for Automated Plant Disease Detection Using Deep Learning Image Classification",
+    "venue": "Patent Office Journal, India (Issue 50/2025)",
+    "year": "2025",
+    "description": "A deep learning–based image classification system for automated plant disease detection, aimed at enabling accurate, scalable, and real-time diagnosis to support precision agriculture and decision-making.",
+    "status": "published",
+    "authors": [
+      "Nimit Prakash",
+      "Om Narayan Pandit",
+      "Vraj Patel",
+      "Vedant Shitole",
+      "Dr. Shrikrishna Kolhar"
+    ],
+    "tags": [
+      "Deep Learning",
+      "Computer Vision",
+      "AgriTech",
+      "Image Classification",
+      "Artificial Intelligence"
+    ],
+    "pdfUrl": "/assets/patents/Patent_Grant_Plant_Disease_Detection_DL.pdf"
+  },
+  {
     id: "nlp-cybersec-2025",
     title:
       "Towards Ethical and Explainable NLP Models for Cybersecurity Threat Detection",
@@ -353,6 +376,16 @@ export const timeline: TimelineItem[] = [
     type: "education",
   },
   {
+    id: "dbm",
+    date: "2025 – 2026",
+    title: "Diploma in Business Management",
+    institution: "Symbiosis Institute of Technology, Pune",
+    description:
+      "Focused coursework in machine learning, deep learning, computer vision, NLP, and reinforcement learning. Active in research projects and technical viva preparation.",
+    badge: "Ongoing",
+    type: "education",
+  },
+  {
     id: "research-ai",
     date: "2023 – Present",
     title: "Independent AI Researcher",
@@ -369,6 +402,7 @@ export const timeline: TimelineItem[] = [
     institution: "PCM Stream — Physics, Chemistry, Mathematics",
     description:
       "Strong foundation in mathematical and scientific reasoning. First exposure to programming and algorithmic thinking.",
+    badge: "completed",
     type: "education",
   }
 ];

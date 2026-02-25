@@ -23,7 +23,7 @@ export function EducationSection() {
             <div className="relative pl-7 border-l border-gradient-to-b from-accent to-accent/0" style={{ borderImage: "linear-gradient(to bottom, #6366f1, rgba(99,102,241,0)) 1" }}>
               {timeline.map((item, i) => (
                 <Reveal key={item.id} delay={i * 100}>
-                  <div className="relative pb-10 last:pb-0">
+                  <div className="relative pb-10 last:pb-5">
                     {/* Dot */}
                     <div className="absolute -left-[1.85rem] top-1 w-2.5 h-2.5 rounded-full bg-accent border-2 border-[var(--bg)] shadow-[0_0_12px_rgba(99,102,241,0.6)]" />
 
