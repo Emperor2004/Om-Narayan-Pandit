@@ -43,10 +43,10 @@ export function ContactSection() {
 
   const socials = [
     { label: "GitHub", href: "https://github.com/Emperor2004", icon: "⟡" },
-    { label: "LinkedIn", href: "www.linkedin.com/in/om-narayan-pandit", icon: "⟡" },
-    { label: "Google Scholar", href: "#", icon: "⟡" },
-    { label: "Twitter / X", href: "#", icon: "⟡" },
-    { label: "Download CV", href: "/cv.pdf", icon: "⟡" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/om-narayan-pandit", icon: "⟡" },
+    { label: "Research Gate", href: "https://www.researchgate.net/profile/Om-Pandit-2?ev=hdr_xprf", icon: "⟡" },
+    { label: "Instagram", href: "https://www.instagram.com/the_om.narayan.pandit", icon: "⟡" },
+    { label: "Download CV", href: "/assets/cv/resume_cv.pdf", icon: "⟡" },
   ];
 
   return (
