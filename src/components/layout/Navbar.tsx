@@ -7,12 +7,12 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/#about", label: "about" },
-  { href: "/#projects", label: "projects" },
-  { href: "/#publications", label: "research" },
-  { href: "/#blog", label: "blog" },
-  { href: "/#education", label: "education" },
-  { href: "/#contact", label: "contact" },
+  { href: "/#about", label: "About" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#publications", label: "Research" },
+  { href: "/#blog", label: "Blog" },
+  { href: "/#education", label: "Education" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export function Navbar() {
@@ -75,7 +75,7 @@ export function Navbar() {
           {/* Open to Opportunities Badge */}
           <div className="hidden md:flex items-center gap-2 font-mono text-[0.72rem] text-[var(--accent2)] border border-[var(--accent2)]/30 px-3 py-1.5 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent2)] animate-pulse" />
-            open to opportunities
+            Open to Opportunities
           </div>
 
           {/* Mobile Menu Button */}
