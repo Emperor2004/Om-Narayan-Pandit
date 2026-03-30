@@ -43,6 +43,7 @@ export interface BlogPost {
   title: string;
   slug: string;
   excerpt: string;
+  url: string;
   content: string;
   tags: string[];
   publishedAt: string;

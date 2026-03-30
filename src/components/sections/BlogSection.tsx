@@ -31,9 +31,14 @@ export function BlogSection() {
         <div className="grid md:grid-cols-3 gap-5">
           {published.map((post, i) => (
             <Reveal key={post.id} delay={i * 80}>
-              <Link href={`/blog/${post.slug}`} className="cursor-none">
+              <a
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cursor-none"
+              >
                 <div className="group h-full bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 hover:-translate-y-2 hover:border-accent/35 hover:shadow-glow-sm transition-all duration-300">
-                  {/* Meta */}
+
                   <div className="flex items-center gap-3 mb-4">
                     <span className="font-mono text-[0.65rem] text-[var(--muted)]">
                       {formatDate(post.publishedAt)}
@@ -41,6 +46,7 @@ export function BlogSection() {
                     <span className="flex items-center gap-1 font-mono text-[0.65rem] text-[var(--muted)]">
                       <Clock size={9} /> {post.readTime} min read
                     </span>
+
                   </div>
 
                   <h3 className="font-syne font-bold text-base leading-snug mb-3 group-hover:text-accent transition-colors">
@@ -56,8 +62,11 @@ export function BlogSection() {
                       <TechPill key={tag} label={tag} />
                     ))}
                   </div>
+                  <span className="text-xs text-accent ml-1">Read on Medium ↗</span>
+
                 </div>
-              </Link>
+
+              </a>
             </Reveal>
           ))}
         </div>

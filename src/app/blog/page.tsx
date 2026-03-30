@@ -52,23 +52,37 @@ export default function BlogPage() {
           <div className="space-y-5">
             {published.map((post, i) => (
               <Reveal key={post.id} delay={i * 80}>
-                <Link href={`/blog/${post.slug}`} className="cursor-none">
+                <a
+                  href={post.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-none"
+                >
                   <div className="group bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 hover:border-accent/35 hover:-translate-x-1 hover:shadow-glow-sm transition-all duration-300">
                     <div className="flex items-center gap-4 mb-3">
-                      <span className="font-mono text-[0.65rem] text-[var(--muted)]">{formatDate(post.publishedAt)}</span>
+                      <span className="font-mono text-[0.65rem] text-[var(--muted)]">
+                        {formatDate(post.publishedAt)}
+                      </span>
                       <span className="flex items-center gap-1 font-mono text-[0.65rem] text-[var(--muted)]">
                         <Clock size={9} /> {post.readTime} min read
                       </span>
                     </div>
+
                     <h2 className="font-syne font-bold text-xl mb-2 group-hover:text-accent transition-colors leading-snug">
                       {post.title}
                     </h2>
-                    <p className="text-[var(--muted)] leading-relaxed mb-4">{post.excerpt}</p>
+
+                    <p className="text-[var(--muted)] leading-relaxed mb-4">
+                      {post.excerpt}
+                    </p>
+
                     <div className="flex flex-wrap gap-1.5">
-                      {post.tags.map((tag) => <TechPill key={tag} label={tag} />)}
+                      {post.tags.map((tag) => (
+                        <TechPill key={tag} label={tag} />
+                      ))}
                     </div>
                   </div>
-                </Link>
+                </a>
               </Reveal>
             ))}
           </div>
