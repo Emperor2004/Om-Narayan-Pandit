@@ -112,7 +112,7 @@ export const publications: Publication[] = [
       "Image Classification",
       "Artificial Intelligence"
     ],
-    "pdfUrl": "/assets/patents/Patent Publication for Plant Disease Detection DL.pdf"
+    "pdfUrl": "/assets/patents/Patent_Publication_Plant_Disease_DL.pdf"
   },
   // {
   //   id: "nlp-cybersec-2025",
