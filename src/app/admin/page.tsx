@@ -119,11 +119,10 @@ function AdminDashboard({ token, onLogout }: { token: string; onLogout: () => vo
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 font-mono text-[0.75rem] px-4 py-2 rounded-lg transition-all cursor-none ${
-                activeTab === tab.id
-                  ? "bg-accent/15 text-accent border border-accent/30"
-                  : "text-[var(--muted)] hover:text-[var(--text)] border border-transparent"
-              }`}
+              className={`flex items-center gap-2 font-mono text-[0.75rem] px-4 py-2 rounded-lg transition-all cursor-none ${activeTab === tab.id
+                ? "bg-accent/15 text-accent border border-accent/30"
+                : "text-[var(--muted)] hover:text-[var(--text)] border border-transparent"
+                }`}
             >
               <tab.icon size={13} />
               {tab.label}
@@ -366,8 +365,13 @@ function BlogAdmin({ posts, setPosts, headers }: {
   const [editing, setEditing] = useState<BlogPost | null>(null);
   const [adding, setAdding] = useState(false);
   const blank: Omit<BlogPost, "id" | "slug" | "readTime"> = {
-    title: "", excerpt: "", content: "", tags: [],
-    publishedAt: new Date().toISOString().slice(0, 10), published: false,
+    title: "",
+    excerpt: "",
+    content: "",
+    url: "", // ✅ ADD THIS
+    tags: [],
+    publishedAt: new Date().toISOString().slice(0, 10),
+    published: false,
   };
   const [form, setForm] = useState<Omit<BlogPost, "id" | "slug" | "readTime">>(blank);
 
@@ -407,6 +411,12 @@ function BlogAdmin({ posts, setPosts, headers }: {
           <h3 className="font-syne font-bold">{editing ? "Edit Post" : "New Post"}</h3>
           <input className="admin-input" placeholder="Title" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} />
           <input className="admin-input" placeholder="Excerpt (1-2 sentences)" value={form.excerpt} onChange={(e) => setForm({ ...form, excerpt: e.target.value })} />
+          <input
+            className="admin-input"
+            placeholder="Blog URL (Medium / external link)"
+            value={form.url}
+            onChange={(e) => setForm({ ...form, url: e.target.value })}
+          />
           <textarea className="admin-input resize-none font-mono text-xs" rows={12} placeholder="Content (Markdown supported)" value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} />
           <div className="grid grid-cols-2 gap-4">
             <input className="admin-input" placeholder="Tags (comma separated)" value={Array.isArray(form.tags) ? form.tags.join(", ") : ""} onChange={(e) => setForm({ ...form, tags: e.target.value.split(",").map((t) => t.trim()) })} />
