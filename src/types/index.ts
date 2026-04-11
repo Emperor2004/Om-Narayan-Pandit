@@ -12,7 +12,7 @@ export interface Project {
   demoUrl?: string;
   imageUrl?: string;
   createdAt: string;
-  status: "completed" | "ongoing" | "archived";
+  status: "completed" | "ongoing" | "archived" | "prototype";
 }
 
 // ─── Publication Types ────────────────────────────────────────────────────────
