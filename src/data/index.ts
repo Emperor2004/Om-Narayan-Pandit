@@ -43,8 +43,8 @@ export const projects: Project[] = [
   },
 
   {
-    id: "bolo-bazaar",
-    title: "Bolo Bazaar — Voice-First Rural Commerce & Credit Platform",
+    id: "krishi-sarthi",
+    title: "Krishi Sarthi — Voice-First Rural Commerce & Credit Platform",
     description:
       "A voice-first commerce and informal credit platform for rural/semi-urban Indian vendors, built on IndicWhisper ASR with Hindi NLU, a digital udhar ledger, and SMS/USSD fallback.",
     longDescription:
