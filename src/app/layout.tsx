@@ -1,60 +1,55 @@
 import type { Metadata } from "next";
-import { Syne, Space_Mono, DM_Sans } from "next/font/google";
+import { Inter, JetBrains_Mono, Poppins } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
+import { PerformanceMonitor } from "@/components/ui/PerformanceMonitor";
+import { ServiceWorkerRegister } from "@/components/ui/ServiceWorkerRegister";
+import { siteMetadata } from "./metadata";
 
-const syne = Syne({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-syne",
-  weight: ["400", "600", "700", "800"],
+  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
-const spaceMono = Space_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-space-mono",
-  weight: ["400", "700"],
+  variable: "--font-jetbrains-mono",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
-const dmSans = DM_Sans({
+const poppins = Poppins({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
-  weight: ["300", "400", "500"],
+  variable: "--font-poppins",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Om Narayan Pandit — AI/ML Engineer",
-    template: "%s | Om Narayan Pandit",
-  },
-  description:
-    "B.Tech student and aspiring AI/ML engineer specializing in Deep Learning, Reinforcement Learning, Computer Vision, and NLP for Cybersecurity.",
-  keywords: [
-    "AI", "ML", "Machine Learning", "Deep Learning", "Reinforcement Learning",
-    "Computer Vision", "NLP", "GANs", "Portfolio", "B.Tech", "Research",
-  ],
-  authors: [{ name: "Om Narayan Pandit" }],
-  openGraph: {
-    title: "Om Narayan Pandit — AI/ML Engineer",
-    description: "Building intelligent systems at the intersection of research and real-world impact.",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Om Narayan Pandit — AI/ML Engineer",
-  },
-  robots: { index: true, follow: true },
-};
+export const metadata: Metadata = siteMetadata;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${syne.variable} ${spaceMono.variable} ${dmSans.variable}`}
+      className={`${inter.variable} ${jetbrainsMono.variable} ${poppins.variable}`}
     >
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#0d1117" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+      </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          {children}
+          <ErrorBoundary>
+            <PerformanceMonitor />
+            <ServiceWorkerRegister />
+            {children}
+          </ErrorBoundary>
         </ThemeProvider>
       </body>
     </html>

@@ -2,12 +2,17 @@
 node_modules/
 .pnp
 .pnp.js
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
 
 # ─── Next.js ─────────────────────────────────────────────────────────────────
 .next/
 out/
 build/
 dist/
+.vercel/
+.turbo/
 
 # ─── Environment Variables ────────────────────────────────────────────────────
 .env
@@ -15,6 +20,7 @@ dist/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.example
 
 # ─── Logs ────────────────────────────────────────────────────────────────────
 npm-debug.log*
@@ -22,6 +28,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.log
+lerna-debug.log*
 
 # ─── OS Files ─────────────────────────────────────────────────────────────────
 .DS_Store
@@ -32,6 +39,7 @@ pnpm-debug.log*
 ehthumbs.db
 Thumbs.db
 desktop.ini
+$RECYCLE.BIN/
 
 # ─── Editor / IDE ─────────────────────────────────────────────────────────────
 .vscode/
@@ -43,16 +51,58 @@ desktop.ini
 *.njsproj
 *.sln
 *.sw?
+.eslintcache
+.stylelintcache
 
 # ─── TypeScript ───────────────────────────────────────────────────────────────
 *.tsbuildinfo
 next-env.d.ts
+*.d.ts.map
 
 # ─── Testing ──────────────────────────────────────────────────────────────────
 coverage/
 .nyc_output/
+junit.xml
+test-results/
 
-# ─── Misc ─────────────────────────────────────────────────────────────────────
+# ─── Production / Build ─────────────────────────────────────────────────────
+.cache/
+.parcel-cache/
+.temp/
+.tmp/
+*.tgz
+*.tar.gz
+
+# ─── Security ────────────────────────────────────────────────────────────────
 *.pem
-.vercel
-.turbo
+*.key
+*.p12
+*.pfx
+.env.keys
+secrets/
+private/
+
+# ─── Deployment ─────────────────────────────────────────────────────────────
+.netlify/
+.firebase/
+.serverless/
+.wrangler/
+
+# ─── Analytics ─────────────────────────────────────────────────────────────
+.sentry-cli
+*.lcov
+
+# ─── Documentation ───────────────────────────────────────────────────────
+.docusaurus
+.storybook-out/
+
+# ─── Local Development ─────────────────────────────────────────────────────
+.local/
+.localstorage
+*.sqlite
+*.sqlite3
+*.db
+
+# ─── Asset Optimization ───────────────────────────────────────────────────
+.image-cache
+.font-cache

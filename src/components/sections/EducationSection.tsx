@@ -28,7 +28,7 @@ export function EducationSection() {
                     <div className="absolute -left-[1.85rem] top-1 w-2.5 h-2.5 rounded-full bg-accent border-2 border-[var(--bg)] shadow-[0_0_12px_rgba(99,102,241,0.6)]" />
 
                     <div className="font-mono text-[0.7rem] text-accent mb-1">{item.date}</div>
-                    <h3 className="font-syne font-bold text-base mb-0.5">{item.title}</h3>
+                    <h3 className="font-poppins font-bold text-base mb-0.5">{item.title}</h3>
                     <p className="text-[var(--muted)] text-sm mb-2">{item.institution}</p>
                     <p className="text-[var(--muted)] text-sm leading-relaxed">{item.description}</p>
                     {item.badge && (
@@ -56,7 +56,7 @@ export function EducationSection() {
                       {a.icon}
                     </div>
                     <div>
-                      <div className="font-syne font-bold text-sm mb-1 group-hover:text-accent transition-colors">
+                      <div className="font-poppins font-bold text-sm mb-1 group-hover:text-accent transition-colors">
                         {a.title}
                       </div>
                       <div className="text-[var(--muted)] text-xs leading-relaxed">

@@ -1,27 +1,42 @@
 "use client";
 
-import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 import { Github, ExternalLink } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { TechPill } from "@/components/ui/Badge";
-import { useCardMouseGlow } from "@/hooks";
+import { TiltCard } from "@/components/ui/TiltCard";
+import { ProjectGridSkeleton } from "@/components/ui/Skeleton";
+import { useTouchGestures } from "@/hooks/useTouchGestures";
+import dynamic from "next/dynamic";
 import { projects } from "@/data";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types";
 
+// Dynamically import Canvas with SSR disabled
+const Canvas = dynamic(() => import("@react-three/fiber").then((mod) => mod.Canvas), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-[var(--card)]/50" />,
+});
+
+// Dynamically import ProjectShowcase with SSR disabled
+const ProjectShowcase = dynamic(() => import("@/components/effects/ProjectShowcase").then((mod) => mod.ProjectShowcase), {
+  ssr: false,
+  loading: () => null,
+});
+
 function ProjectCard({ project, index }: { project: Project; index: number }) {
-  const { ref, handleMouseMove } = useCardMouseGlow();
   const isFeatured = project.featured;
 
   return (
     <Reveal delay={index * 80} className={cn(isFeatured && "md:col-span-2")}>
-      <div
-        ref={ref}
-        onMouseMove={handleMouseMove}
+      <TiltCard 
+        intensity={20} 
+        scale={1.08}
+        glare={true}
         className={cn(
           "card-glow group h-full bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6",
-          "hover:-translate-y-2 hover:border-accent/40 hover:shadow-glow-sm transition-all duration-300",
+          "hover:border-accent/40 hover:shadow-glow-sm transition-all duration-300",
           isFeatured && "border-accent/25 bg-gradient-to-br from-accent/5 to-[var(--card)]"
         )}
       >
@@ -38,7 +53,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
 
           {/* Title */}
-          <h3 className="font-syne font-bold text-lg leading-tight mb-3 group-hover:text-accent transition-colors">
+          <h3 className="font-poppins font-bold text-lg leading-tight mb-3 group-hover:text-accent transition-colors">
             {project.title}
           </h3>
 
@@ -78,12 +93,33 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             )}
           </div>
         </div>
-      </div>
+      </TiltCard>
     </Reveal>
   );
 }
 
 export function ProjectsSection() {
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const projectsRef = useRef<HTMLDivElement>(null);
+
+  // Touch gesture handling for mobile
+  const { isTouchDevice } = useTouchGestures(projectsRef, {
+    swipeLeft: () => {
+      setCurrentProjectIndex(prev => Math.max(0, prev - 1));
+    },
+    swipeRight: () => {
+      setCurrentProjectIndex(prev => Math.min(projects.length - 1, prev + 1));
+    },
+    tap: () => {
+      // Open current project in new tab
+      const currentProject = projects[currentProjectIndex];
+      if (currentProject?.demoUrl) {
+        window.open(currentProject.demoUrl, '_blank');
+      }
+    },
+  });
+
+  
   return (
     <section id="projects" className="py-24 relative z-10">
       <div className="max-w-6xl mx-auto px-6">
@@ -95,7 +131,15 @@ export function ProjectsSection() {
           />
         </Reveal>
 
-        <div className="grid md:grid-cols-3 gap-5">
+        {/* Mobile swipe indicators */}
+        {isTouchDevice && (
+          <div className="flex justify-center gap-2 mb-4 text-[var(--muted)] text-sm">
+            <span>← Swipe to navigate</span>
+            <span className="text-[var(--accent)]">Project {currentProjectIndex + 1}/{projects.length}</span>
+          </div>
+        )}
+
+        <div ref={projectsRef} className="grid md:grid-cols-3 gap-5">
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}

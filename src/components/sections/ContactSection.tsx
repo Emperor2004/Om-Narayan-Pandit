@@ -128,8 +128,8 @@ export function ContactSection() {
                     <a
                       key={s.label}
                       href={s.href}
-                      target={s.href !== "/cv.pdf" ? "_blank" : undefined}
-                      rel="noopener noreferrer"
+                      target={s.href.startsWith("http") ? "_blank" : undefined}
+                      rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
                       className="flex items-center gap-3 font-mono text-[0.78rem] text-[var(--muted)] border border-[var(--border)] px-4 py-3 rounded-xl hover:text-[var(--accent2)] hover:border-[var(--accent2)] hover:bg-cyan-glow/5 hover:-translate-y-0.5 transition-all cursor-none"
                     >
                       <span className="text-accent">{s.icon}</span>

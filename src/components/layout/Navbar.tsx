@@ -18,7 +18,7 @@ const navLinks = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="font-syne font-extrabold text-lg tracking-tight">
+        <Link href="/" className="font-poppins font-extrabold text-lg tracking-tight">
           ONP<span className="text-accent">.</span>
         </Link>
 

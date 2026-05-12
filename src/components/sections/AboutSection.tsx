@@ -1,15 +1,17 @@
+"use client";
+
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
-import { skillCategories } from "@/data";
-import { cn } from "@/lib/utils";
+import dynamic from "next/dynamic";
+import { SkillConstellation } from "@/components/effects/SkillConstellation";
+
+// Dynamically import Canvas with SSR disabled
+const Canvas = dynamic(() => import("@react-three/fiber").then((mod) => mod.Canvas), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-[var(--card)]/50" />,
+});
 
 export function AboutSection() {
-  const colorMap = {
-    accent: "bg-accent/8 border-accent/20 text-[var(--text)] hover:bg-accent/20 hover:border-accent hover:text-accent",
-    cyan: "bg-cyan-glow/8 border-cyan-glow/20 text-[var(--text)] hover:bg-cyan-glow/20 hover:border-cyan-glow hover:text-cyan-glow",
-    pink: "bg-pink-glow/8 border-pink-glow/20 text-[var(--text)] hover:bg-pink-glow/20 hover:border-pink-glow hover:text-pink-glow",
-  };
-
   return (
     <section id="about" className="py-24 relative z-10">
       <div className="max-w-6xl mx-auto px-6">
@@ -28,7 +30,7 @@ export function AboutSection() {
                 I&apos;m <strong className="text-[var(--text)]">Om Narayan Pandit</strong>, an aspiring
                 AI/ML engineer passionate about building intelligent systems that solve real problems —
                 not just impressive demos. My work spans{" "}
-                <strong className="text-[var(--text)]">deep learning, computer vision, GANs</strong>,
+                <strong className="text-[var(--text)]">deep learning, computer vision, NLP, GANs</strong>,
                 and <strong className="text-[var(--text)]">reinforcement learning</strong>.
               </p>
               <p>
@@ -47,30 +49,12 @@ export function AboutSection() {
             </div>
           </Reveal>
 
-          {/* Skills */}
+          {/* Skills - replaced with 3D Skill Constellation */}
           <Reveal delay={200}>
-            <div className="space-y-6">
-              {skillCategories.map((cat) => (
-                <div key={cat.name}>
-                  <div className="font-mono text-[0.68rem] text-[var(--muted)] uppercase tracking-widest mb-2">
-                    {cat.name}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {cat.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        data-cursor="pointer"
-                        className={cn(
-                          "font-mono text-[0.7rem] px-2.5 py-1 rounded-md border transition-all duration-200 cursor-none",
-                          colorMap[cat.color]
-                        )}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+            <div className="w-full h-[300px] md:h-[400px]">
+              <Canvas style={{ width: '100%', height: '100%' }} camera={{ position: [0, 0, 3] }}>
+                <SkillConstellation />
+              </Canvas>
             </div>
           </Reveal>
         </div>

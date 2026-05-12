@@ -36,7 +36,7 @@ export function PublicationsSection() {
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-syne font-bold text-base leading-snug mb-1 group-hover:text-accent transition-colors">
+                  <h3 className="font-poppins font-bold text-base leading-snug mb-1 group-hover:text-accent transition-colors">
                     {pub.title}
                   </h3>
                   <p className="text-pink-glow/80 text-sm italic mb-2">{pub.venue}</p>

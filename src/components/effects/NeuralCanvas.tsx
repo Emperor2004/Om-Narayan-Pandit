@@ -19,6 +19,7 @@ export function NeuralCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const animRef = useRef<number>(0);
+  const visibilityRef = useRef<boolean>(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -28,10 +29,14 @@ export function NeuralCanvas() {
     let W = 0, H = 0;
     const nodes: Node[] = [];
     const particles: Particle[] = [];
+    let resizeTimeout: NodeJS.Timeout;
 
     function resize() {
-      W = canvas!.width = window.innerWidth;
-      H = canvas!.height = window.innerHeight;
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        W = canvas!.width = window.innerWidth;
+        H = canvas!.height = window.innerHeight;
+      }, 250);
     }
     resize();
     window.addEventListener("resize", resize);
@@ -41,45 +46,109 @@ export function NeuralCanvas() {
     };
     window.addEventListener("mousemove", onMouseMove);
 
-    for (let i = 0; i < 65; i++) {
+    // Interactive particle burst on click
+    const createParticleBurst = (x: number, y: number) => {
+      for (let i = 0; i < 8; i++) {
+        const angle = (Math.PI * 2 * i) / 8;
+        const velocity = 2 + Math.random() * 2;
+        particles.push({
+          x,
+          y,
+          vx: Math.cos(angle) * velocity,
+          vy: Math.sin(angle) * velocity,
+          size: Math.random() * 2 + 1,
+          alpha: 0.8,
+          hue: Math.random() > 0.5 ? secondaryG : primaryG,
+        });
+      }
+      
+      // Remove oldest particles if too many
+      if (particles.length > 30) {
+        particles.splice(0, 8);
+      }
+    };
+
+    const onMouseClick = (e: MouseEvent) => {
+      createParticleBurst(e.clientX, e.clientY);
+    };
+    window.addEventListener("click", onMouseClick);
+
+    const onVisibilityChange = () => {
+      visibilityRef.current = !document.hidden;
+      if (!visibilityRef.current && animRef.current) {
+        cancelAnimationFrame(animRef.current);
+      } else if (visibilityRef.current) {
+        draw();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    // Get seasonal theme based on month
+    const getSeasonalColors = () => {
+      const month = new Date().getMonth();
+      const seasons = {
+        winter: { primary: [99, 102, 241], secondary: [34, 211, 238] }, // Blue, Cyan
+        spring: { primary: [34, 197, 94], secondary: [16, 185, 129] }, // Green, Emerald
+        summer: { primary: [251, 146, 60], secondary: [245, 158, 11] }, // Yellow, Orange
+        fall: { primary: [217, 70, 239], secondary: [251, 146, 60] }, // Purple, Yellow
+      };
+      
+      if (month >= 2 && month <= 4) return seasons.spring;
+      if (month >= 5 && month <= 7) return seasons.summer;
+      if (month >= 8 && month <= 10) return seasons.fall;
+      return seasons.winter;
+    };
+
+    const seasonalColors = getSeasonalColors();
+    const [primaryR, primaryG, primaryB] = seasonalColors.primary;
+    const [secondaryR, secondaryG, secondaryB] = seasonalColors.secondary;
+
+    // Reduced number of particles for better performance
+    for (let i = 0; i < 40; i++) {
       nodes.push({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 2 + 0.5,
-        alpha: Math.random() * 0.5 + 0.1,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        size: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.4 + 0.1,
       });
     }
 
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 20; i++) {
       particles.push({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: -Math.random() * 0.7 - 0.2,
-        size: Math.random() * 1.5 + 0.3,
-        alpha: Math.random() * 0.35,
-        hue: Math.random() > 0.5 ? 245 : 190,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: -Math.random() * 0.4 - 0.1,
+        size: Math.random() * 1 + 0.2,
+        alpha: Math.random() * 0.2,
+        hue: Math.random() > 0.5 ? secondaryG : primaryG,
       });
     }
 
     function draw() {
+      // Exit early if not visible
+      if (!visibilityRef.current) {
+        animRef.current = requestAnimationFrame(draw);
+        return;
+      }
+
       ctx.clearRect(0, 0, W, H);
 
-      // Connections
+      // Optimized connections - only check nearby nodes
       for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
           const dx = nodes[i].x - nodes[j].x;
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 160) {
-            const alpha = (1 - dist / 160) * 0.12;
+          if (dist < 120) { // Reduced from 160
+            const alpha = (1 - dist / 120) * 0.08; // Reduced opacity
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
             ctx.strokeStyle = `rgba(99,102,241,${alpha})`;
-            ctx.lineWidth = 0.5;
+            ctx.lineWidth = 0.3; // Reduced width
             ctx.stroke();
           }
         }
@@ -90,18 +159,18 @@ export function NeuralCanvas() {
         const dx = n.x - mouse.current.x;
         const dy = n.y - mouse.current.y;
         const mdist = Math.sqrt(dx * dx + dy * dy);
-        const glow = mdist < 130 ? (1 - mdist / 130) * 0.85 : 0;
+        const glow = mdist < 100 ? (1 - mdist / 100) * 0.6 : 0; // Reduced range
 
-        if (glow > 0.2) {
+        if (glow > 0.1) {
           ctx.beginPath();
-          ctx.arc(n.x, n.y, (n.size + glow * 3) * 5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(99,102,241,${glow * 0.04})`;
+          ctx.arc(n.x, n.y, (n.size + glow * 2) * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(99,102,241,${glow * 0.02})`;
           ctx.fill();
         }
 
         ctx.beginPath();
-        ctx.arc(n.x, n.y, n.size + glow * 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(99,102,241,${n.alpha + glow * 0.6})`;
+        ctx.arc(n.x, n.y, n.size + glow * 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(99,102,241,${n.alpha + glow * 0.4})`;
         ctx.fill();
 
         n.x += n.vx;
@@ -129,8 +198,11 @@ export function NeuralCanvas() {
 
     return () => {
       cancelAnimationFrame(animRef.current);
+      clearTimeout(resizeTimeout);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("click", onMouseClick);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);
 

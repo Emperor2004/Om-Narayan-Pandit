@@ -49,7 +49,7 @@ export function BlogSection() {
 
                   </div>
 
-                  <h3 className="font-syne font-bold text-base leading-snug mb-3 group-hover:text-accent transition-colors">
+                  <h3 className="font-poppins font-bold text-base leading-snug mb-3 group-hover:text-accent transition-colors">
                     {post.title}
                   </h3>
 

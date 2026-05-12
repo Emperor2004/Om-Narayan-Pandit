@@ -5,21 +5,32 @@ import { useEffect, useRef } from "react";
 export function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const trailRef = useRef<HTMLDivElement>(null);
-  const pos = useRef({ x: 0, y: 0 });
+  const pos = useRef<{ x: number; y: number; lastUpdate?: number }>({ x: 0, y: 0 });
+  const visibilityRef = useRef<boolean>(true);
 
   useEffect(() => {
     const cursor = cursorRef.current;
     const trail = trailRef.current;
     if (!cursor || !trail) return;
 
+    // Disable custom cursor on admin page
+    if (window.location.pathname.startsWith('/admin')) {
+      return;
+    }
+
     const onMove = (e: MouseEvent) => {
-      pos.current = { x: e.clientX, y: e.clientY };
+      // Throttle mouse movement to reduce updates
+      if (performance.now() - (pos.current.lastUpdate || 0) < 16) return; // ~60fps
+      
+      pos.current = { x: e.clientX, y: e.clientY, lastUpdate: performance.now() };
       cursor.style.left = `${e.clientX}px`;
       cursor.style.top = `${e.clientY}px`;
-      setTimeout(() => {
+      
+      // Use requestAnimationFrame for smoother trail animation
+      requestAnimationFrame(() => {
         trail.style.left = `${e.clientX}px`;
         trail.style.top = `${e.clientY}px`;
-      }, 80);
+      });
     };
 
     const onEnterLink = () => {
@@ -36,20 +47,44 @@ export function CustomCursor() {
       cursor.style.background = "var(--accent)";
     };
 
-    window.addEventListener("mousemove", onMove);
+    const onVisibilityChange = () => {
+      visibilityRef.current = !document.hidden;
+      if (!visibilityRef.current) {
+        // Hide cursor when tab is not visible
+        cursor.style.opacity = "0";
+        trail.style.opacity = "0";
+      } else {
+        cursor.style.opacity = "1";
+        trail.style.opacity = "1";
+      }
+    };
 
-    const interactables = document.querySelectorAll("a, button, [data-cursor='pointer']");
-    interactables.forEach((el) => {
-      el.addEventListener("mouseenter", onEnterLink);
-      el.addEventListener("mouseleave", onLeaveLink);
-    });
+    window.addEventListener("mousemove", onMove);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+
+    // Cache interactable elements and use event delegation
+    const handleInteract = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.matches("a, button, [data-cursor='pointer']")) {
+        onEnterLink();
+      }
+    };
+
+    const handleInteractLeave = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.matches("a, button, [data-cursor='pointer']")) {
+        onLeaveLink();
+      }
+    };
+
+    window.addEventListener("mouseover", handleInteract, true);
+    window.addEventListener("mouseout", handleInteractLeave, true);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
-      interactables.forEach((el) => {
-        el.removeEventListener("mouseenter", onEnterLink);
-        el.removeEventListener("mouseleave", onLeaveLink);
-      });
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("mouseover", handleInteract, true);
+      window.removeEventListener("mouseout", handleInteractLeave, true);
     };
   }, []);
 
@@ -67,7 +102,7 @@ export function CustomCursor() {
           pointerEvents: "none",
           zIndex: 9999,
           transform: "translate(-50%,-50%)",
-          transition: "width 0.3s, height 0.3s, background 0.3s",
+          transition: "width 0.1s, height 0.1s, background 0.1s",
           mixBlendMode: "screen",
         }}
       />
@@ -78,12 +113,12 @@ export function CustomCursor() {
           position: "fixed",
           width: 36,
           height: 36,
-          border: "1px solid rgba(99,102,241,0.5)",
+          border: "1px solid rgba(99,102,241,0.3)",
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 9998,
           transform: "translate(-50%,-50%)",
-          transition: "left 0.12s ease-out, top 0.12s ease-out",
+          transition: "left 0.08s ease-out, top 0.08s ease-out"
         }}
       />
     </>

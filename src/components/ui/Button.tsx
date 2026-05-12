@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, useRef, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -10,10 +10,28 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
 }
 
+// Ripple effect component
+const Ripple = ({ x, y, id }: { x: number; y: number; id: number }) => (
+  <span
+    className="absolute bg-white/30 rounded-full animate-ping pointer-events-none"
+    style={{
+      left: x - 10,
+      top: y - 10,
+      width: 20,
+      height: 20,
+      animation: 'ripple 0.6s ease-out',
+    }}
+    key={id}
+  />
+);
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "primary", size = "md", className, children, loading, ...props }, ref) => {
+  ({ variant = "primary", size = "md", className, children, loading, onClick, ...props }, ref) => {
+    const [isHovered, setIsHovered] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
     const base =
-      "inline-flex items-center justify-center gap-2 font-syne font-bold rounded-lg transition-all duration-200 cursor-none disabled:opacity-50 disabled:pointer-events-none";
+      "inline-flex items-center justify-center gap-2 font-poppins font-bold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:pointer-events-none";
 
     const variants = {
       primary:
@@ -32,13 +50,27 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       lg: "text-base px-7 py-3.5",
     };
 
+    
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      onClick?.(e);
+    };
+
     return (
       <button
-        ref={ref}
+        ref={(node) => {
+          if (typeof ref === 'function') {
+            ref(node);
+          } else if (ref) {
+            ref.current = node;
+          }
+        }}
         className={cn(base, variants[variant], sizes[size], className)}
+        onClick={handleClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         {...props}
       >
-        {loading ? (
+                {loading ? (
           <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
         ) : (
           children
@@ -56,9 +88,12 @@ interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> 
   size?: "sm" | "md" | "lg";
 }
 
-export function LinkButton({ variant = "primary", size = "md", className, children, ...props }: LinkButtonProps) {
+export function LinkButton({ variant = "primary", size = "md", className, children, onClick, ...props }: LinkButtonProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const linkRef = useRef<HTMLAnchorElement>(null);
+
   const base =
-    "inline-flex items-center justify-center gap-2 font-syne font-bold rounded-lg transition-all duration-200 cursor-none";
+    "inline-flex items-center justify-center gap-2 font-poppins font-bold rounded-lg transition-all duration-200";
 
   const variants = {
     primary: "bg-accent text-white hover:-translate-y-0.5 hover:shadow-glow",
@@ -72,8 +107,19 @@ export function LinkButton({ variant = "primary", size = "md", className, childr
     lg: "text-base px-7 py-3.5",
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    onClick?.(e);
+  };
+
   return (
-    <a className={cn(base, variants[variant], sizes[size], className)} {...props}>
+    <a 
+      ref={linkRef}
+      className={cn(base, variants[variant], sizes[size], className)} 
+      onClick={handleClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      {...props}
+    >
       {children}
     </a>
   );

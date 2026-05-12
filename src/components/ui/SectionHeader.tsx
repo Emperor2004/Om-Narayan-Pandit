@@ -20,7 +20,7 @@ export function SectionHeader({ label, title, subtitle, className, centered }: S
         {!centered && <span className="flex-none w-6 h-px bg-accent" />}
         {label}
       </div>
-      <h2 className="font-syne font-extrabold text-3xl md:text-4xl tracking-tight leading-tight">
+      <h2 className="font-poppins font-extrabold text-3xl md:text-4xl tracking-tight leading-tight">
         {title}
       </h2>
       {subtitle && (

@@ -1,15 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function ScrollProgress() {
   const [progress, setProgress] = useState(0);
+  const tickingRef = useRef(false);
 
   useEffect(() => {
     const onScroll = () => {
-      const scrolled = window.scrollY;
-      const maxScroll = document.body.scrollHeight - window.innerHeight;
-      setProgress(maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0);
+      if (!tickingRef.current) {
+        window.requestAnimationFrame(() => {
+          const scrolled = window.scrollY;
+          const maxScroll = document.body.scrollHeight - window.innerHeight;
+          setProgress(maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0);
+          tickingRef.current = false;
+        });
+        tickingRef.current = true;
+      }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });

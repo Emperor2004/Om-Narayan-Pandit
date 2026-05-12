@@ -11,7 +11,7 @@ function StatItem({ value, label }: { value: string; label: string }) {
 
   return (
     <div ref={ref} className="text-center">
-      <div className="font-syne font-extrabold text-3xl md:text-4xl tracking-tight gradient-text">
+      <div className="font-poppins font-extrabold text-3xl md:text-4xl tracking-tight gradient-text">
         {isVisible ? `${count}${suffix}` : "0"}
       </div>
       <div className="font-mono text-[0.72rem] text-[var(--muted)] mt-1 tracking-wider">

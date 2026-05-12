@@ -1,5 +1,6 @@
 /* ─── Google Fonts ───────────────────────────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+AU+NSW:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -16,9 +17,10 @@
   --accent3: #f472b6;
   --text: #f1f5f9;
   --muted: #64748b;
-  --font-syne: 'Syne', sans-serif;
-  --font-space-mono: 'Space Mono', monospace;
-  --font-dm-sans: 'DM Sans', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', monospace;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-playwrite-au: 'Playwrite AU NSW', cursive;
 }
 
 .dark {
@@ -46,7 +48,7 @@ html { scroll-behavior: smooth; }
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: var(--font-dm-sans);
+  font-family: var(--font-inter);
   overflow-x: hidden;
   cursor: none;
 }
@@ -104,8 +106,8 @@ body::after {
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
 /* ─── Utility Classes ────────────────────────────────────────────────────────── */
-.font-syne { font-family: var(--font-syne); }
-.font-mono { font-family: var(--font-space-mono); }
+.font-poppins { font-family: var(--font-poppins); }
+.font-mono { font-family: var(--font-jetbrains-mono); }
 
 .gradient-text {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
@@ -151,8 +153,8 @@ body::after {
 }
 
 .prose-portfolio h2 {
-  font-family: var(--font-syne);
-  font-weight: 700;
+  font-family: var(--font-poppins);
+  font-weight: 600;
   font-size: 1.4rem;
   color: var(--text);
   margin: 2rem 0 1rem;
@@ -179,7 +181,7 @@ body::after {
 }
 
 .prose-portfolio code {
-  font-family: var(--font-space-mono);
+  font-family: var(--font-jetbrains-mono);
   font-size: 0.85em;
   background: rgba(99, 102, 241, 0.1);
   color: var(--accent2);
@@ -198,6 +200,53 @@ body::after {
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
+/* ─── Ripple Animation ─────────────────────────────────────────────────────────── */
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ─── Letter Reveal Animation ─────────────────────────────────────────────────── */
+@keyframes letterReveal {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ─── GPU Acceleration ───────────────────────────────────────────────────── */
+.transform-gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ─── Shimmer Animation ─────────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
 /* ─── Admin ──────────────────────────────────────────────────────────────────── */
 .admin-input {
   background: var(--card);
@@ -206,8 +255,16 @@ body::after {
   border-radius: 8px;
   padding: 0.65rem 1rem;
   width: 100%;
-  font-family: var(--font-dm-sans);
+  font-family: var(--font-inter);
   font-size: 0.9rem;
+}
+
+/* Ensure default cursor is visible on admin pages */
+.admin-page * {
+  cursor: auto !important;
+}
+
+.admin-input {
   transition: border-color 0.3s;
   outline: none;
 }

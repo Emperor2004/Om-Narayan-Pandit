@@ -40,7 +40,7 @@ export default function BlogPage() {
               <div className="font-mono text-[0.72rem] text-accent uppercase tracking-[0.15em] mb-3 flex items-center gap-3">
                 <span className="w-6 h-px bg-accent" /> Writing
               </div>
-              <h1 className="font-syne font-extrabold text-4xl tracking-tight mb-3">
+              <h1 className="font-poppins font-extrabold text-4xl tracking-tight mb-3">
                 Blog &amp; <span className="gradient-text-cyan">Thoughts</span>
               </h1>
               <p className="text-[var(--muted)] leading-relaxed">
@@ -68,7 +68,7 @@ export default function BlogPage() {
                       </span>
                     </div>
 
-                    <h2 className="font-syne font-bold text-xl mb-2 group-hover:text-accent transition-colors leading-snug">
+                    <h2 className="font-poppins font-bold text-xl mb-2 group-hover:text-accent transition-colors leading-snug">
                       {post.title}
                     </h2>
 

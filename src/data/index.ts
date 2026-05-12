@@ -44,7 +44,7 @@ export const projects: Project[] = [
 
   {
     id: "krishi-sarthi",
-    title: "Krishi Sarthi — Voice-First Rural Commerce & Credit Platform",
+    title: "Krishi Sarthi — Voice-First Rural Agriculture Platform",
     description:
       "A voice-first commerce and informal credit platform for rural/semi-urban Indian vendors, built on IndicWhisper ASR with Hindi NLU, a digital udhar ledger, and SMS/USSD fallback.",
     longDescription:
@@ -519,6 +519,6 @@ export const timeline: TimelineItem[] = [
 export const stats = [
   { value: "10+", label: "Projects Built" },
   { value: "1+", label: "Research Papers" },
-  { value: "6", label: "Skill Domains" },
+  { value: "6+", label: "Skill Domains" },
   { value: "2027", label: "Graduating Year" },
 ];

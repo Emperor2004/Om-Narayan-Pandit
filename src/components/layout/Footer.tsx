@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export function Footer() {
   return (
     <footer className="border-t border-[var(--border)] py-8 relative z-10">
@@ -11,8 +9,8 @@ export function Footer() {
         <div className="flex items-center gap-6">
           {[
             { href: "https://github.com/Emperor2004", label: "GitHub" },
-            { href: "www.linkedin.com/in/om-narayan-pandit", label: "LinkedIn" },
-            { href: "https://twitter.com/omnarayanpandit", label: "Twitter" },
+            { href: "https://www.linkedin.com/in/om-narayan-pandit", label: "LinkedIn" },
+            { href: "https://www.youtube.com/@omnarayanpandit4386", label: "YouTube" },
           ].map((l) => (
             <a
               key={l.href}
