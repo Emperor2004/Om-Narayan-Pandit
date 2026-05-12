@@ -31,7 +31,6 @@ export default defineConfig({
           statements: 70,
         },
       },
-      all: true,
       include: [
         'src/**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}',
         '!src/**/*.d.ts',

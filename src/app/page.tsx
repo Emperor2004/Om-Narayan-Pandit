@@ -4,18 +4,7 @@ import { NeuralCanvas } from "@/components/effects/NeuralCanvas";
 import { CustomCursor } from "@/components/effects/CustomCursor";
 import { ScrollProgress } from "@/components/effects/ScrollProgress";
 import { SectionTransition } from "@/components/ui/SectionTransition";
-import dynamic from "next/dynamic";
-
-// Dynamically import HeroSection with SSR disabled to prevent hydration errors
-const HeroSection = dynamic(() => import("@/components/sections/HeroSection").then((mod) => mod.HeroSection), {
-  ssr: false,
-  loading: () => <div className="min-h-screen flex items-center justify-center bg-[var(--bg)]">
-    <div className="text-center">
-      <div className="w-16 h-16 border-4 border-accent/20 border-t-accent rounded-full animate-spin mx-auto mb-4"></div>
-      <p className="text-[var(--muted)] font-mono text-sm">Loading...</p>
-    </div>
-  </div>,
-});
+import { DynamicHeroSection } from "@/components/sections/DynamicHeroSection";
 import { StatsBar } from "@/components/sections/StatsBar";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
@@ -33,7 +22,7 @@ export default function HomePage() {
       <Navbar />
  
       <main>
-        <HeroSection />
+        <DynamicHeroSection />
         <SectionTransition id="stats" delay={1}>
           <StatsBar />
         </SectionTransition>
