@@ -21,6 +21,8 @@
   --font-jetbrains-mono: 'JetBrains Mono', monospace;
   --font-poppins: 'Poppins', sans-serif;
   --font-playwrite-au: 'Playwrite AU NSW', cursive;
+  --cyan-glow: #22d3ee;
+  --purple-glow: #f472b6;
 }
 
 .dark {
@@ -247,8 +249,8 @@ body::after {
   animation: shimmer 1.5s infinite;
 }
 
-/* ─── Admin ──────────────────────────────────────────────────────────────────── */
-.admin-input {
+/* ─── Forms ──────────────────────────────────────────────────────────────────── */
+.form-input {
   background: var(--card);
   border: 1px solid var(--border);
   color: var(--text);
@@ -259,15 +261,10 @@ body::after {
   font-size: 0.9rem;
 }
 
-/* Ensure default cursor is visible on admin pages */
-.admin-page * {
-  cursor: auto !important;
-}
-
-.admin-input {
+.form-input {
   transition: border-color 0.3s;
   outline: none;
 }
 
-.admin-input:focus { border-color: var(--accent); }
-.admin-input::placeholder { color: var(--muted); }
+.form-input:focus { border-color: var(--accent); }
+.form-input::placeholder { color: var(--muted); }

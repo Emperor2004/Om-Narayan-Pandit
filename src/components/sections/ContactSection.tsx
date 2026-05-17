@@ -74,7 +74,7 @@ export function ContactSection() {
                       <input
                         name="name" value={form.name} onChange={handleChange} required
                         placeholder="Your name"
-                        className="admin-input"
+                        className="form-input"
                       />
                     </div>
                     <div>
@@ -82,7 +82,7 @@ export function ContactSection() {
                       <input
                         name="email" type="email" value={form.email} onChange={handleChange} required
                         placeholder="your@email.com"
-                        className="admin-input"
+                        className="form-input"
                       />
                     </div>
                   </div>
@@ -91,7 +91,7 @@ export function ContactSection() {
                     <input
                       name="subject" value={form.subject} onChange={handleChange} required
                       placeholder="What's this about?"
-                      className="admin-input"
+                      className="form-input"
                     />
                   </div>
                   <div>
@@ -99,7 +99,7 @@ export function ContactSection() {
                     <textarea
                       name="message" value={form.message} onChange={handleChange} required rows={5}
                       placeholder="Tell me about your project, idea, or opportunity..."
-                      className="admin-input resize-none"
+                      className="form-input resize-none"
                     />
                   </div>
 

@@ -57,20 +57,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        ref={(node) => {
-          if (typeof ref === 'function') {
-            ref(node);
-          } else if (ref) {
-            ref.current = node;
-          }
-        }}
+        ref={ref}
         className={cn(base, variants[variant], sizes[size], className)}
+        disabled={loading}
         onClick={handleClick}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
         {...props}
       >
-                {loading ? (
+        {loading ? (
           <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
         ) : (
           children
@@ -89,7 +82,6 @@ interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> 
 }
 
 export function LinkButton({ variant = "primary", size = "md", className, children, onClick, ...props }: LinkButtonProps) {
-  const [isHovered, setIsHovered] = useState(false);
   const linkRef = useRef<HTMLAnchorElement>(null);
 
   const base =
@@ -116,8 +108,6 @@ export function LinkButton({ variant = "primary", size = "md", className, childr
       ref={linkRef}
       className={cn(base, variants[variant], sizes[size], className)} 
       onClick={handleClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       {...props}
     >
       {children}

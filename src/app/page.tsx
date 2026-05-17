@@ -4,7 +4,7 @@ import { NeuralCanvas } from "@/components/effects/NeuralCanvas";
 import { CustomCursor } from "@/components/effects/CustomCursor";
 import { ScrollProgress } from "@/components/effects/ScrollProgress";
 import { SectionTransition } from "@/components/ui/SectionTransition";
-import { DynamicHeroSection } from "@/components/sections/DynamicHeroSection";
+import { HeroSection } from "@/components/sections/HeroSection";
 import { StatsBar } from "@/components/sections/StatsBar";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
@@ -22,7 +22,7 @@ export default function HomePage() {
       <Navbar />
  
       <main>
-        <DynamicHeroSection />
+        <HeroSection />
         <SectionTransition id="stats" delay={1}>
           <StatsBar />
         </SectionTransition>
