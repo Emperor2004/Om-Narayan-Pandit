@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <ErrorBoundary>
             <PerformanceMonitor />

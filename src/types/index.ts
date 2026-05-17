@@ -102,11 +102,3 @@ export interface ApiResponse<T = unknown> {
   error?: string;
   success: boolean;
 }
-
-// ─── Admin Types ──────────────────────────────────────────────────────────────
-
-export type AdminSection = "projects" | "publications" | "blog";
-
-export interface AdminLoginPayload {
-  password: string;
-}

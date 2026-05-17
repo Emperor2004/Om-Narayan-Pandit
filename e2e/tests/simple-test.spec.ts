@@ -2,10 +2,10 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Simple Test', () => {
   test('basic navigation test', async ({ page }) => {
-    console.log('Testing navigation to localhost:3001');
+    console.log('Testing navigation to localhost:3000');
     
     try {
-      await page.goto('http://localhost:3001');
+      await page.goto('http://localhost:3000');
       console.log('Navigation successful');
       
       // Wait a bit for the page to load

@@ -13,11 +13,6 @@ export function CustomCursor() {
     const trail = trailRef.current;
     if (!cursor || !trail) return;
 
-    // Disable custom cursor on admin page
-    if (window.location.pathname.startsWith('/admin')) {
-      return;
-    }
-
     const onMove = (e: MouseEvent) => {
       // Throttle mouse movement to reduce updates
       if (performance.now() - (pos.current.lastUpdate || 0) < 16) return; // ~60fps
