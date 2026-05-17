@@ -1,0 +1,71 @@
+{
+  "id": "portfolio_visual_regression",
+  "viewports": [
+    {
+      "label": "Mobile",
+      "width": 375,
+      "height": 667
+    },
+    {
+      "label": "Desktop",
+      "width": 1280,
+      "height": 1024
+    }
+  ],
+  "onReadyScript": "onReady.js",
+  "scenarios": [
+    {
+      "label": "Homepage Full Layout",
+      "url": "http://localhost:3000",
+      "delay": 2000,
+      "hideSelectors": [
+        "canvas",
+        ".custom-cursor"
+      ],
+      "removeSelectors": [],
+      "selectors": [
+        "document"
+      ],
+      "readySelector": "main",
+      "misMatchThreshold": 4.0,
+      "requireSameDimensions": false
+    },
+    {
+      "label": "Navbar Component",
+      "url": "http://localhost:3000",
+      "delay": 1000,
+      "hideSelectors": [],
+      "selectors": [
+        "nav"
+      ],
+      "misMatchThreshold": 0.5
+    },
+    {
+      "label": "Contact Footer",
+      "url": "http://localhost:3000",
+      "delay": 1000,
+      "scrollToSelector": "footer",
+      "hideSelectors": [],
+      "selectors": [
+        "footer"
+      ],
+      "misMatchThreshold": 0.5
+    }
+  ],
+  "paths": {
+    "bitmaps_reference": "backstop_data/bitmaps_reference",
+    "bitmaps_test": "backstop_data/bitmaps_test",
+    "engine_scripts": "backstop_data/engine_scripts",
+    "html_report": "backstop_data/html_report",
+    "ci_report": "backstop_data/ci_report"
+  },
+  "report": ["browser"],
+  "engine": "playwright",
+  "engineOptions": {
+    "args": ["--no-sandbox"]
+  },
+  "asyncCaptureLimit": 5,
+  "asyncCompareLimit": 50,
+  "debug": false,
+  "debugWindow": false
+}

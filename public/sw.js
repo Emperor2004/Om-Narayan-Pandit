@@ -1,6 +1,18 @@
-const CACHE_NAME = 'portfolio-v1';
-const STATIC_CACHE = 'static-v1';
-const DYNAMIC_CACHE = 'dynamic-v1';
+// Do not cache anything in development (localhost)
+if (self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1') {
+  self.addEventListener('install', () => self.skipWaiting());
+  self.addEventListener('activate', (event) => {
+    event.waitUntil(
+      caches.keys().then((names) => Promise.all(names.map((n) => caches.delete(n))))
+        .then(() => self.clients.claim())
+    );
+  });
+  // No fetch handler — pass everything through to the network
+} else {
+
+const CACHE_NAME = 'portfolio-v2';
+const STATIC_CACHE = 'static-v2';
+const DYNAMIC_CACHE = 'dynamic-v2';
 
 const STATIC_ASSETS = [
   '/',
@@ -142,3 +154,5 @@ self.addEventListener('push', (event) => {
     );
   }
 });
+
+} // end production-only block

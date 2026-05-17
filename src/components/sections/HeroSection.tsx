@@ -1,153 +1,94 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-// Fallback components that don't rely on complex imports
-const FallbackButton = ({ children, className, ...props }: any) => (
-  <button className={`${className || ''} px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors`} {...props}>
-    {children}
-  </button>
-);
-
-const FallbackLinkButton = ({ children, className, ...props }: any) => (
-  <a className={`${className || ''} px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors inline-block`} {...props}>
-    {children}
-  </a>
-);
-
-const FallbackName3D = ({ className }: { className?: string }) => (
-  <h1 className={`text-6xl md:text-8xl font-poppins font-bold bg-gradient-to-r from-[var(--cyan-glow)] to-[var(--purple-glow)] bg-clip-text text-transparent ${className || ''}`}>
-    Om Narayan
-  </h1>
-);
-
-const FallbackAnimatedText = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-xl md:text-2xl text-[var(--text-muted)] font-playwrite-au">
-    {children}
-  </span>
-);
-
-const FallbackCanvas = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-full h-full flex items-center justify-center bg-[var(--card)]/50 rounded-full">
-    {children}
-  </div>
-);
-
-const FallbackAIBrain = () => null;
+import Link from "next/link";
 
 export function HeroSection() {
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [greeting, setGreeting] = useState("Good morning");
-  const [version, setVersion] = useState(0);
+  const [greeting, setGreeting] = useState("GOOD MORNING");
   const [mounted, setMounted] = useState(false);
-
-  const PHRASES = ["AI Engineer", "ML Researcher", "RL Enthusiast", "Deep Learning Dev"];
 
   useEffect(() => {
     setMounted(true);
-    // Update version every minute
-    const interval = setInterval(() => {
-      setVersion(Math.floor(Date.now() / 60000));
-    }, 60000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
     
     const updateTimeBasedGreeting = () => {
       const hour = new Date().getHours();
-      let greeting = "";
+      let greetingStr = "";
       
       if (hour >= 5 && hour < 12) {
-        greeting = "Good morning";
+        greetingStr = "GOOD MORNING";
       } else if (hour >= 12 && hour < 17) {
-        greeting = "Good afternoon";
+        greetingStr = "GOOD AFTERNOON";
       } else if (hour >= 17 && hour < 21) {
-        greeting = "Good evening";
+        greetingStr = "GOOD EVENING";
       } else {
-        greeting = "Good night";
+        greetingStr = "GOOD NIGHT";
       }
       
-      setGreeting(greeting);
+      setGreeting(greetingStr);
     };
 
     updateTimeBasedGreeting();
     const interval = setInterval(updateTimeBasedGreeting, 60000);
     return () => clearInterval(interval);
-  }, [mounted]);
-
-  useEffect(() => {
-    if (!mounted) return;
-    
-    const interval = setInterval(() => {
-      setPhraseIdx((i) => (i + 1) % PHRASES.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [mounted]);
+  }, []);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden" data-version={version}>
-      {/* Neural Canvas Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[var(--background)] via-[var(--muted)] to-[var(--background)]">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-      </div>
-      
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-20 w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--cyan-glow)' }}></div>
-      <div className="absolute top-40 right-32 w-3 h-3 rounded-full animate-pulse delay-75" style={{ backgroundColor: 'var(--purple-glow)' }}></div>
-      <div className="absolute bottom-32 left-40 w-2 h-2 rounded-full animate-pulse delay-150" style={{ backgroundColor: 'var(--cyan-glow)' }}></div>
-      <div className="absolute bottom-20 right-20 w-4 h-4 rounded-full animate-pulse delay-300" style={{ backgroundColor: 'var(--purple-glow)' }}></div>
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden font-playwrite-au-tas">
+      {/* Background is transparent to show global starry animation */}
+      <div className="absolute inset-0 bg-transparent pointer-events-none"></div>
 
       {/* Main Content */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-        {/* Greeting Badge */}
-        <div className="mb-8 inline-block">
-          <div className="px-4 py-2 bg-[var(--muted)]/80 backdrop-blur-sm rounded-full border border-[var(--border)]/50">
-            <span className="text-sm text-[var(--text-muted)] font-playwrite-au">
-              {greeting}! 👋
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-4 mt-12">
+        
+        {/* Top Badge */}
+        <div className="mb-6 inline-block opacity-0 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+          <div className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-cyan-glow shadow-glow-cyan"></div>
+            <span className="text-[10px] sm:text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
+              ✦ {mounted ? greeting : "GOOD DAY"} · AI/ML ENGINEER
             </span>
           </div>
         </div>
 
-        {/* Name */}
-        <div className="mb-6">
-          <FallbackName3D />
+        {/* Glowing Name */}
+        <div className="mb-8 relative opacity-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          {/* Blur shadow layer */}
+          <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-poppins font-black leading-tight absolute inset-0 blur-3xl opacity-60 bg-gradient-to-r from-cyan-glow via-accent-light to-pink-glow bg-clip-text text-transparent transform translate-y-4 pointer-events-none select-none">
+            Om Narayan<br/>Pandit
+          </h1>
+          {/* Crisp front layer */}
+          <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-poppins font-black leading-tight relative z-10 bg-gradient-to-r from-cyan-glow via-accent-light to-pink-glow bg-clip-text text-transparent">
+            Om Narayan<br/>Pandit
+          </h1>
         </div>
 
-        {/* Power Statement */}
-        <div className="mb-12">
-          <FallbackAnimatedText>
-            Building the future with {PHRASES[phraseIdx]}
-          </FallbackAnimatedText>
-        </div>
+        {/* Subtitle */}
+        <p className="max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-[var(--text)]/90 font-medium mb-6 leading-relaxed opacity-0 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          Building next-generation AI systems that <span className="text-accent-light">perceive, reason, learn,</span> and <span className="text-accent-light">adapt</span> to real world.
+        </p>
 
-        {/* 3D Canvas Placeholder */}
-        <div className="mb-12 flex justify-center">
-          <FallbackCanvas>
-            <div className="text-center">
-              <div className="text-4xl mb-2">🚀</div>
-              <div className="text-sm text-[var(--text-muted)]">AI-Powered Portfolio</div>
-            </div>
-          </FallbackCanvas>
+        {/* Typewriter text / Role */}
+        <div className="mb-10 text-accent-light text-lg sm:text-xl opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+          ML Researcher
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <FallbackLinkButton href="#projects">
-            View Projects
-          </FallbackLinkButton>
-          <FallbackButton>
-            Download CV
-          </FallbackButton>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 animate-slide-up" style={{ animationDelay: '0.5s' }}>
+          <Link href="#projects" className="px-8 py-3.5 bg-accent hover:bg-accent-light text-white rounded-lg font-medium transition-all shadow-glow hover:shadow-[0_0_30px_rgba(99,102,241,0.6)] flex items-center gap-2 group w-full sm:w-auto justify-center">
+            View My Work
+            <span className="group-hover:translate-x-1 transition-transform">→</span>
+          </Link>
+          <Link href="#contact" className="px-8 py-3.5 bg-transparent border border-white/10 hover:bg-white/5 text-[var(--text)] rounded-lg font-medium transition-all w-full sm:w-auto justify-center">
+            Get In Touch
+          </Link>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="w-6 h-10 border-2 border-[var(--border)]/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-[var(--border)]/50 rounded-full mt-2 animate-bounce"></div>
-        </div>
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 animate-fade-in" style={{ animationDelay: '1s' }}>
+        <span className="text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase opacity-50">
+          SCROLL
+        </span>
       </div>
     </section>
   );

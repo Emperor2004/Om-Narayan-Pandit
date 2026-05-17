@@ -63,7 +63,23 @@ next-env.d.ts
 coverage/
 .nyc_output/
 junit.xml
+**/test-results/
 test-results/
+
+# Playwright
+playwright-report/
+blob-report/
+
+# BackstopJS (Only test output, keep bitmaps_reference)
+backstop_data/bitmaps_test/
+backstop_data/html_report/
+backstop_data/ci_report/
+
+# Stryker Mutation Testing
+.stryker-tmp/
+reports/
+stryker.log
+mutation-report.html
 
 # ─── Production / Build ─────────────────────────────────────────────────────
 .cache/
@@ -106,35 +122,3 @@ private/
 # ─── Asset Optimization ───────────────────────────────────────────────────
 .image-cache
 .font-cache
-
-# ─── Mutation Testing ─────────────────────────────────────────────────────
-mutation-report.html
-mutation-report/
-.stryker-tmp/
-
-# ─── Playwright E2E Testing ──────────────────────────────────────────────
-playwright-report/
-playwright/.cache/
-.auth/
-
-# ─── Vitest / Testing ────────────────────────────────────────────────────
-.vitest/
-vitest.workspace.ts.timestamp-*
-
-# ─── Next.js Specific ────────────────────────────────────────────────────
-.next/cache/
-public/sw.js.map
-.incremental
-
-# ─── IDE Extensions & Runtime ────────────────────────────────────────────
-*.code-workspace
-.history/
-.vscode-server/
-
-# ─── Node/npm Specifics ──────────────────────────────────────────────────
-npm-shrinkwrap.json
-.node_repl_history
-
-# ─── macOS Specifics ────────────────────────────────────────────────────
-.AppleDouble
-.LSOverride
