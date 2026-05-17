@@ -2,11 +2,23 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { AnimatedText } from "@/components/ui/AnimatedText";
 import { Name3D } from "@/components/ui/Name3D";
 
 export function HeroSection() {
   const [greeting, setGreeting] = useState("GOOD MORNING");
   const [mounted, setMounted] = useState(false);
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  const rolePhrases = [
+    "AI Solutions Builder",
+    "Data Science Practitioner",
+    "Machine Learning Researcher",
+    "Deep Learning Architect",
+    "Computer Vision Enthusiast",
+    "Reinforcement Learning Explorer",
+    "NLP & Generative AI Engineer"
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -32,6 +44,14 @@ export function HeroSection() {
     const interval = setInterval(updateTimeBasedGreeting, 60000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const roleRotation = setInterval(() => {
+      setRoleIndex((current) => (current + 1) % rolePhrases.length);
+    }, 4500);
+
+    return () => clearInterval(roleRotation);
+  }, [rolePhrases.length]);
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden font-playwrite-au-tas">
@@ -63,7 +83,11 @@ export function HeroSection() {
 
         {/* Typewriter text / Role */}
         <div className="mb-10 text-accent-light text-lg sm:text-xl opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-          ML Researcher
+          <AnimatedText
+            text={rolePhrases[roleIndex]}
+            type="typewriter"
+            speed={90}
+          />
         </div>
 
         {/* Action Buttons */}

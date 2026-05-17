@@ -25,6 +25,9 @@ export function AnimatedText({
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    setDisplayedText("");
+    setIsComplete(false);
+
     if (type === "reveal") {
       // Letter-by-letter reveal animation
       let currentIndex = 0;
@@ -76,9 +79,24 @@ export function AnimatedText({
         if (intervalRef.current) clearInterval(intervalRef.current);
       };
     } else {
-      // Typewriter effect (simpler version)
-      setDisplayedText(text);
-      setIsComplete(true);
+      // Typewriter effect
+      let currentIndex = 0;
+      const timeout = setTimeout(() => {
+        intervalRef.current = setInterval(() => {
+          if (currentIndex < text.length) {
+            setDisplayedText(text.slice(0, currentIndex + 1));
+            currentIndex++;
+          } else {
+            setIsComplete(true);
+            if (intervalRef.current) clearInterval(intervalRef.current);
+          }
+        }, speed);
+      }, delay);
+
+      return () => {
+        clearTimeout(timeout);
+        if (intervalRef.current) clearInterval(intervalRef.current);
+      };
     }
   }, [text, type, delay, speed]);
 
