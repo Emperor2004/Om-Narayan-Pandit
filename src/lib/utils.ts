@@ -7,7 +7,6 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("en-US", {
-    timeZone: "UTC",
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -16,7 +15,6 @@ export function formatDate(dateStr: string): string {
 
 export function formatDateShort(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("en-US", {
-    timeZone: "UTC",
     year: "numeric",
     month: "short",
   });

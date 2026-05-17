@@ -67,8 +67,18 @@ Based on my thorough analysis of the Next.js portfolio project, here's a compreh
 - Noise overlay effect
 - Scrollbar customization
 - Section dividers
-- Contact form styling
+- Admin input/form styling
 - Prose typography for markdown rendering
+
+### [admin/page.tsx](src/app/admin/page.tsx)
+**Purpose**: Admin dashboard for CRUD operations  
+**Key Features**:
+- Login form with password authentication
+- Tabbed dashboard for Projects, Publications, and Blog Posts
+- Create, Read, Update, Delete functionality
+- Bearer token authentication
+- Session storage for auth persistence
+- Real-time form validation
 
 ### [blog/page.tsx](src/app/blog/page.tsx)
 **Purpose**: Blog listing page  
@@ -298,6 +308,7 @@ Based on my thorough analysis of the Next.js portfolio project, here's a compreh
 - `SkillCategory`: Grouped skills with colors
 - `Achievement`: Achievement items with icons and years
 - `TimelineItem`: Education/experience timeline entries
+- `AdminSection`: Admin panel tabs
 - `PublicationStatus`: Publication state enum
 
 ### [lib/utils.ts](src/lib/utils.ts)
@@ -326,14 +337,15 @@ Based on my thorough analysis of the Next.js portfolio project, here's a compreh
 ## Summary
 
 This portfolio is a **production-grade Next.js application** featuring:
-- **Full-stack architecture** with read-only content APIs and a secure contact endpoint
+- **Full-stack architecture** with API routes for CRUD operations
 - **Sophisticated animations** (canvas, scroll reveal, typewriter, floating elements)
+- **Authentication** for admin dashboard
 - **Email integration** via Resend
 - **Type-safe** with comprehensive TypeScript interfaces
 - **Responsive design** with Tailwind CSS
 - **Dark mode** support via next-themes
 - **Performance optimized** with static generation and image optimization
-- **File-driven content management** through `src/data/index.ts`
+- **Structured content management** (projects, publications, blog posts, education)
 - **Custom hooks and utilities** for reusable logic
 
 The project demonstrates modern Web development best practices with emphasis on UI/UX, performance, and maintainability.

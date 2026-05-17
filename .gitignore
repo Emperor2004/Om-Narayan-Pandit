@@ -106,35 +106,3 @@ private/
 # ─── Asset Optimization ───────────────────────────────────────────────────
 .image-cache
 .font-cache
-
-# ─── Mutation Testing ─────────────────────────────────────────────────────
-mutation-report.html
-mutation-report/
-.stryker-tmp/
-
-# ─── Playwright E2E Testing ──────────────────────────────────────────────
-playwright-report/
-playwright/.cache/
-.auth/
-
-# ─── Vitest / Testing ────────────────────────────────────────────────────
-.vitest/
-vitest.workspace.ts.timestamp-*
-
-# ─── Next.js Specific ────────────────────────────────────────────────────
-.next/cache/
-public/sw.js.map
-.incremental
-
-# ─── IDE Extensions & Runtime ────────────────────────────────────────────
-*.code-workspace
-.history/
-.vscode-server/
-
-# ─── Node/npm Specifics ──────────────────────────────────────────────────
-npm-shrinkwrap.json
-.node_repl_history
-
-# ─── macOS Specifics ────────────────────────────────────────────────────
-.AppleDouble
-.LSOverride

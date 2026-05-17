@@ -14,7 +14,7 @@ export function useLoadingState() {
   });
 
   const setLoading = useCallback((loading: boolean) => {
-    setState(prev => ({ ...prev, loading, error: loading ? null : prev.error }));
+    setState(prev => ({ ...prev, loading }));
   }, []);
 
   const setError = useCallback((error: string | null) => {
@@ -32,7 +32,7 @@ export function useLoadingState() {
       const result = await asyncFn();
       return result;
     } catch (error) {
-      setError(error instanceof Error ? error.message : String(error));
+      setError(error instanceof Error ? error.message : 'An error occurred');
       return null;
     } finally {
       setLoading(false);

@@ -1,60 +1,67 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 
-// Fallback components that don't rely on complex imports
-const FallbackButton = ({ children, className, ...props }: any) => (
-  <button className={`${className || ''} px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors`} {...props}>
-    {children}
-  </button>
-);
+// Dynamically import Canvas with SSR disabled
+const Canvas = dynamic(() => import("@react-three/fiber").then((mod) => mod.Canvas), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-[var(--card)]/50 rounded-full" />,
+});
 
-const FallbackLinkButton = ({ children, className, ...props }: any) => (
-  <a className={`${className || ''} px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors inline-block`} {...props}>
-    {children}
-  </a>
-);
+// Dynamically import AIBrain with SSR disabled
+const AIBrain = dynamic(() => import("@/components/effects/AIBrain").then((mod) => mod.AIBrain), {
+  ssr: false,
+  loading: () => null,
+});
 
-const FallbackName3D = ({ className }: { className?: string }) => (
-  <h1 className={`text-6xl md:text-8xl font-poppins font-bold bg-gradient-to-r from-[var(--cyan-glow)] to-[var(--purple-glow)] bg-clip-text text-transparent ${className || ''}`}>
-    Om Narayan
-  </h1>
-);
+// Dynamically import AnimatedText with SSR disabled
+const AnimatedText = dynamic(() => import("@/components/ui/AnimatedText").then((mod) => mod.AnimatedText), {
+  ssr: false,
+});
 
-const FallbackAnimatedText = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-xl md:text-2xl text-[var(--text-muted)] font-playwrite-au">
-    {children}
-  </span>
-);
+// Dynamically import LinkButton to avoid potential import issues
+const LinkButton = dynamic(() => import("@/components/ui/Button").then((mod) => mod.LinkButton), {
+  ssr: false,
+});
 
-const FallbackCanvas = ({ children }: { children: React.ReactNode }) => (
-  <div className="w-full h-full flex items-center justify-center bg-[var(--card)]/50 rounded-full">
-    {children}
-  </div>
-);
+// Dynamically import Name3D to avoid potential import issues
+const Name3D = dynamic(() => import("@/components/ui/Name3D").then((mod) => mod.Name3D), {
+  ssr: false,
+});
 
-const FallbackAIBrain = () => null;
+const PHRASES = ["AI Engineer", "ML Researcher", "RL Enthusiast", "Deep Learning Dev"];
 
 export function HeroSection() {
   const [phraseIdx, setPhraseIdx] = useState(0);
-  const [greeting, setGreeting] = useState("Good morning");
-  const [version, setVersion] = useState(0);
-  const [mounted, setMounted] = useState(false);
+  // Initialize greeting state to prevent hydration mismatch
+  const [greeting, setGreeting] = useState(() => {
+    // Server-side and client-side initialization
+    if (typeof window !== 'undefined') {
+      const hour = new Date().getHours();
+      if (hour >= 5 && hour < 12) return "Good morning";
+      if (hour >= 12 && hour < 17) return "Good afternoon";
+      if (hour >= 17 && hour < 21) return "Good evening";
+      return "Good night";
+    }
+    return "Good morning"; // Default for SSR
+  });
 
-  const PHRASES = ["AI Engineer", "ML Researcher", "RL Enthusiast", "Deep Learning Dev"];
-
+  // Force refresh to clear browser cache
+  const [version, setVersion] = useState(() => {
+    // Use a timestamp that changes every minute
+    return Math.floor(Date.now() / 60000);
+  });
   useEffect(() => {
-    setMounted(true);
-    // Update version every minute
+    // Update version every minute to force cache refresh
     const interval = setInterval(() => {
       setVersion(Math.floor(Date.now() / 60000));
     }, 60000);
     return () => clearInterval(interval);
   }, []);
 
+  // Get time-based greeting
   useEffect(() => {
-    if (!mounted) return;
-    
     const updateTimeBasedGreeting = () => {
       const hour = new Date().getHours();
       let greeting = "";
@@ -73,81 +80,79 @@ export function HeroSection() {
     };
 
     updateTimeBasedGreeting();
-    const interval = setInterval(updateTimeBasedGreeting, 60000);
-    return () => clearInterval(interval);
-  }, [mounted]);
+    const interval = setInterval(updateTimeBasedGreeting, 60000); // Update every minute
 
+    return () => clearInterval(interval);
+  }, []);
+
+  // Cycle through phrases
   useEffect(() => {
-    if (!mounted) return;
-    
     const interval = setInterval(() => {
       setPhraseIdx((i) => (i + 1) % PHRASES.length);
-    }, 4000);
+    }, 4000); // Change phrase every 4 seconds
+
     return () => clearInterval(interval);
-  }, [mounted]);
+  }, []);
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden" data-version={version}>
-      {/* Neural Canvas Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[var(--background)] via-[var(--muted)] to-[var(--background)]">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+      {/* Translucent animated background */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-transparent to-accent2/5 animate-pulse" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-accent3/10 to-transparent animate-float" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s', animationDuration: '4s' }} />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent2/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '4s', animationDuration: '4s' }} />
       </div>
-      
-      {/* Floating Elements */}
-      <div className="absolute top-20 left-20 w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--cyan-glow)' }}></div>
-      <div className="absolute top-40 right-32 w-3 h-3 rounded-full animate-pulse delay-75" style={{ backgroundColor: 'var(--purple-glow)' }}></div>
-      <div className="absolute bottom-32 left-40 w-2 h-2 rounded-full animate-pulse delay-150" style={{ backgroundColor: 'var(--cyan-glow)' }}></div>
-      <div className="absolute bottom-20 right-20 w-4 h-4 rounded-full animate-pulse delay-300" style={{ backgroundColor: 'var(--purple-glow)' }}></div>
 
-      {/* Main Content */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
-        {/* Greeting Badge */}
-        <div className="mb-8 inline-block">
-          <div className="px-4 py-2 bg-[var(--muted)]/80 backdrop-blur-sm rounded-full border border-[var(--border)]/50">
-            <span className="text-sm text-[var(--text-muted)] font-playwrite-au">
-              {greeting}! 👋
-            </span>
+      {/* Centered content */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center max-w-4xl mx-auto px-6 min-h-[60vh]">
+        {/* Greeting badge - positioned above center */}
+        <div className="absolute top-0 animate-slide-up" style={{ animationFillMode: "both" }}>
+          <div className="inline-flex items-center gap-2 text-[0.72rem] text-accent uppercase tracking-widest border border-accent/25 px-3 py-1.5 rounded-full bg-accent/5" style={{ fontFamily: 'var(--font-playwrite-au)' }}>
+            ✦ {greeting} · AI/ML Engineer
           </div>
         </div>
 
-        {/* Name */}
-        <div className="mb-6">
-          <FallbackName3D />
-        </div>
+        {/* Main content - perfectly centered */}
+        <div className="animate-slide-up" style={{ animationFillMode: "both" }}>
+          <Name3D className="mb-6" />
 
-        {/* Power Statement */}
-        <div className="mb-12">
-          <FallbackAnimatedText>
-            Building the future with {PHRASES[phraseIdx]}
-          </FallbackAnimatedText>
-        </div>
+          {/* Power statement */}
+          <p className="text-[var(--text)] text-xl md:text-2xl leading-relaxed mb-6 font-medium" style={{ fontFamily: 'var(--font-playwrite-au)' }}>
+            Building next-generation AI systems that{" "}
+            <span className="text-accent font-bold">perceive</span>,{" "}
+            <span className="text-accent font-bold">reason</span>,{" "}
+            <span className="text-accent font-bold">learn</span>,{" "}
+            and{" "}
+            <span className="text-accent font-bold">adapt</span>{" "}
+            to real world.
+          </p>
 
-        {/* 3D Canvas Placeholder */}
-        <div className="mb-12 flex justify-center">
-          <FallbackCanvas>
-            <div className="text-center">
-              <div className="text-4xl mb-2">🚀</div>
-              <div className="text-sm text-[var(--text-muted)]">AI-Powered Portfolio</div>
-            </div>
-          </FallbackCanvas>
-        </div>
+          <div className="flex items-center justify-center gap-1 mb-6 h-7">
+            <AnimatedText 
+              text={PHRASES[phraseIdx]} 
+              type="scramble" 
+              speed={80}
+              delay={500}
+              className="text-sm text-accent" style={{ fontFamily: 'var(--font-playwrite-au)' }}
+            />
+          </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <FallbackLinkButton href="#projects">
-            View Projects
-          </FallbackLinkButton>
-          <FallbackButton>
-            Download CV
-          </FallbackButton>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <LinkButton href="#projects" variant="primary" size="lg">
+              View My Work →
+            </LinkButton>
+            <LinkButton href="#contact" variant="ghost" size="lg">
+              Get In Touch
+            </LinkButton>
+          </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-        <div className="w-6 h-10 border-2 border-[var(--border)]/50 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-[var(--border)]/50 rounded-full mt-2 animate-bounce"></div>
-        </div>
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float">
+        <span className="font-mono text-[0.65rem] text-[var(--muted)] tracking-widest uppercase">scroll</span>
+        <div className="w-px h-8 bg-gradient-to-b from-[var(--muted)] to-transparent" />
       </div>
     </section>
   );

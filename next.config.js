@@ -19,7 +19,26 @@ const nextConfig = {
     optimizePackageImports: ['framer-motion', 'three', '@react-three/fiber'],
   },
   
+  // Turbopack configuration
+  turbopack: {
+    // Enable Turbopack for production builds
+    rules: {
+      // Custom rules can be added here if needed
+    }
+  },
+  
     
+  // Bundle analyzer
+  webpack: (config, { dev, isServer }) => {
+    // Tree shaking for production
+    if (!dev && !isServer) {
+      config.optimization.usedExports = true;
+      config.optimization.sideEffects = false;
+    }
+    
+    return config;
+  },
+  
   // Headers for caching
   async headers() {
     return [
