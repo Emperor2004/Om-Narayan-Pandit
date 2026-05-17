@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { Name3D } from "@/components/ui/Name3D";
 
 export function HeroSection() {
   const [greeting, setGreeting] = useState("GOOD MORNING");
@@ -52,14 +53,7 @@ export function HeroSection() {
 
         {/* Glowing Name */}
         <div className="mb-8 relative opacity-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          {/* Blur shadow layer */}
-          <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-poppins font-black leading-tight absolute inset-0 blur-3xl opacity-60 bg-gradient-to-r from-cyan-glow via-accent-light to-pink-glow bg-clip-text text-transparent transform translate-y-4 pointer-events-none select-none">
-            Om Narayan<br/>Pandit
-          </h1>
-          {/* Crisp front layer */}
-          <h1 className="text-6xl md:text-8xl lg:text-[7.5rem] font-poppins font-black leading-tight relative z-10 bg-gradient-to-r from-cyan-glow via-accent-light to-pink-glow bg-clip-text text-transparent">
-            Om Narayan<br/>Pandit
-          </h1>
+          <Name3D />
         </div>
 
         {/* Subtitle */}

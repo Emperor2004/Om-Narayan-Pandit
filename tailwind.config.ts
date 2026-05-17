@@ -13,6 +13,8 @@ const config: Config = {
         syne: ["var(--font-syne)", "sans-serif"],
         mono: ["var(--font-space-mono)", "monospace"],
         sans: ["var(--font-dm-sans)", "sans-serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
+        playwrite: ["var(--font-playwrite)", "cursive"],
       },
       colors: {
         accent: {
