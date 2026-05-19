@@ -20,7 +20,7 @@ describe('siteMetadata', () => {
   });
 
   it('has openGraph with correct type', () => {
-    expect(siteMetadata.openGraph?.type).toBe('website');
+    expect((siteMetadata.openGraph as any)?.type).toBe('website');
   });
 
   it('has robots config', () => {

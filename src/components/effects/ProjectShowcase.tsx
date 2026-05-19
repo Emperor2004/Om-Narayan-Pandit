@@ -13,6 +13,7 @@ type ProjectVisualizationProps = {
 export function ProjectShowcase({ project, onClick }: ProjectVisualizationProps) {
   const groupRef = useRef<THREE.Group>(null);
   const particleRefs = useRef<THREE.Points[]>([]);
+  const timerRef = useRef<THREE.Timer>(new THREE.Timer());
   const [hovered, setHovered] = useState(false);
 
   // Create particle system for each project
@@ -73,10 +74,10 @@ export function ProjectShowcase({ project, onClick }: ProjectVisualizationProps)
   }, [project]);
 
   // Animation
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (!groupRef.current) return;
     
-    const elapsedTime = clock.getElapsedTime();
+    const elapsedTime = timerRef.current.getElapsed() / 1000;
     
     // Enhanced rotation with hover effect
     const rotationSpeed = hovered ? 0.2 : 0.1;

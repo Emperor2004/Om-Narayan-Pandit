@@ -70,7 +70,7 @@ describe('useLoadingState', () => {
     const { result } = renderHook(() => useLoadingState());
     const mockAsyncFn = vi.fn().mockResolvedValue('success');
     
-    let executionResult: string | null;
+    let executionResult: string | null = null;
     await act(async () => {
       executionResult = await result.current.execute(mockAsyncFn);
     });
@@ -86,10 +86,10 @@ describe('useLoadingState', () => {
     const error = new Error('Test error');
     const mockAsyncFn = vi.fn().mockRejectedValue(error);
     
-    let executionResult: string | null;
+    let executionResult: string | null = null;
     await act(async () => {
       const tempResult = await result.current.execute(mockAsyncFn);
-      executionResult = tempResult;
+      executionResult = tempResult as string | null;
     });
     
     expect(mockAsyncFn).toHaveBeenCalledTimes(1);
@@ -101,7 +101,7 @@ describe('useLoadingState', () => {
     const { result } = renderHook(() => useLoadingState());
     const mockAsyncFn = vi.fn().mockRejectedValue('string error');
     
-    let executionResult: string | null;
+    let executionResult: string | null = null;
     await act(async () => {
       executionResult = await result.current.execute(mockAsyncFn);
     });

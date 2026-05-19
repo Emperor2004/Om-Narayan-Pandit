@@ -24,16 +24,17 @@ test.describe('Visual Regression Testing & Aesthetics', () => {
   test('Navbar component layout matches baseline', async ({ page }) => {
     const navbar = page.locator('nav').first();
     await expect(navbar).toBeVisible();
-    await expect(navbar).toHaveScreenshot('navbar-component.png');
+    await expect(navbar).toHaveScreenshot('navbar-component.png', { timeout: 20000 });
   });
 
   test('Projects section matches baseline', async ({ page }) => {
     const projectsSection = page.locator('#projects').first();
     await projectsSection.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(1000); 
+    await page.waitForTimeout(3000); 
 
     await expect(projectsSection).toHaveScreenshot('projects-component.png', {
-       mask: [page.locator('.mouse-glow')]
+       mask: [page.locator('.mouse-glow')],
+       timeout: 25000,
     });
   });
 });

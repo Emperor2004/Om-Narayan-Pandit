@@ -16,7 +16,7 @@ vi.mock('resend', () => ({
 vi.mock('next/server', () => ({
   NextRequest: vi.fn(),
   NextResponse: {
-    json: vi.fn((data, init) => ({ data, init, status: init?.status ?? 200 })),
+    json: vi.fn((data: unknown, init?: { status?: number }) => ({ data, init, status: init?.status ?? 200 })),
   },
 }));
 
@@ -26,6 +26,8 @@ function makeRequest(body: object, headers: Record<string, string> = {}) {
     json: async () => body,
   } as any;
 }
+
+type MockRes = { data: { success: boolean; message: string }; status: number };
 
 describe('POST /api/contact', () => {
   beforeEach(() => {
@@ -45,7 +47,7 @@ describe('POST /api/contact', () => {
   it('returns 429 when rate limited', async () => {
     mockRateLimit.mockReturnValue({ success: false });
     const { POST } = await import('../app/api/contact/route');
-    const res = await POST(makeRequest({ name: 'A', email: 'a@b.com', subject: 'S', message: 'M' }));
+    const res = await POST(makeRequest({ name: 'A', email: 'a@b.com', subject: 'S', message: 'M' })) as unknown as MockRes;
     expect(res.status).toBe(429);
     expect(res.data.success).toBe(false);
   });
@@ -59,21 +61,21 @@ describe('POST /api/contact', () => {
 
   it('returns 400 when fields missing', async () => {
     const { POST } = await import('../app/api/contact/route');
-    const res = await POST(makeRequest({ name: '', email: 'a@b.com', subject: 'S', message: 'M' }));
+    const res = await POST(makeRequest({ name: '', email: 'a@b.com', subject: 'S', message: 'M' })) as unknown as MockRes;
     expect(res.status).toBe(400);
     expect(res.data.message).toBe('All fields are required.');
   });
 
   it('returns 400 for invalid email', async () => {
     const { POST } = await import('../app/api/contact/route');
-    const res = await POST(makeRequest({ name: 'A', email: 'not-an-email', subject: 'S', message: 'M' }));
+    const res = await POST(makeRequest({ name: 'A', email: 'not-an-email', subject: 'S', message: 'M' })) as unknown as MockRes;
     expect(res.status).toBe(400);
     expect(res.data.message).toBe('Invalid email address.');
   });
 
   it('sends two emails and returns success on valid input', async () => {
     const { POST } = await import('../app/api/contact/route');
-    const res = await POST(makeRequest({ name: 'Alice', email: 'alice@example.com', subject: 'Hello', message: 'Hi there' }));
+    const res = await POST(makeRequest({ name: 'Alice', email: 'alice@example.com', subject: 'Hello', message: 'Hi there' })) as unknown as MockRes;
     expect(mockSend).toHaveBeenCalledTimes(2);
     expect(res.data.success).toBe(true);
   });
@@ -89,7 +91,7 @@ describe('POST /api/contact', () => {
   it('returns 500 on Resend error', async () => {
     mockSend.mockRejectedValue(new Error('Resend failed'));
     const { POST } = await import('../app/api/contact/route');
-    const res = await POST(makeRequest({ name: 'A', email: 'a@b.com', subject: 'S', message: 'M' }));
+    const res = await POST(makeRequest({ name: 'A', email: 'a@b.com', subject: 'S', message: 'M' })) as unknown as MockRes;
     expect(res.status).toBe(500);
     expect(res.data.success).toBe(false);
   });

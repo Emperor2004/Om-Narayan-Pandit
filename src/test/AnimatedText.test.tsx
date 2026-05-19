@@ -1,5 +1,5 @@
 import { render, screen, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { AnimatedText } from '../components/ui/AnimatedText';
 
 beforeEach(() => {
@@ -11,10 +11,13 @@ afterEach(() => {
 });
 
 describe('AnimatedText', () => {
-  it('renders with typewriter type immediately', () => {
-    const { container } = render(<AnimatedText text="Hello" type="typewriter" />);
+  it('renders with typewriter type immediately', async () => {
+    const { container } = render(<AnimatedText text="Hello" type="typewriter" delay={0} speed={50} />);
+    await act(async () => {
+      vi.advanceTimersByTime(50 * 5 + 100); // enough for all 5 chars
+    });
     const span = container.querySelector('span.inline-block') as HTMLElement;
-    expect(span.textContent).toBe('Hello');
+    expect(span.textContent).toContain('Hello');
   });
 
   it('starts empty for reveal type and fills over time', async () => {

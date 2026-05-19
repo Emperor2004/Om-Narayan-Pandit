@@ -74,6 +74,7 @@ export function AIBrain() {
   const brainRef = useRef<THREE.Group>(null);
   const nodeRefs = useRef<Map<string, THREE.Mesh>>(new Map());
   const connectionRefs = useRef<THREE.Line[]>([]);
+  const timerRef = useRef<THREE.Timer>(new THREE.Timer());
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
   const { camera, raycaster, mouse } = useThree();
@@ -229,10 +230,10 @@ export function AIBrain() {
   }, [selectedSkill, createConnections]);
 
   // Animation loop
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (!brainRef.current) return;
 
-    const elapsedTime = clock.getElapsedTime();
+    const elapsedTime = timerRef.current.getElapsed() / 1000;
 
     // Slow rotation of the brain
     brainRef.current.rotation.y = elapsedTime * 0.1;

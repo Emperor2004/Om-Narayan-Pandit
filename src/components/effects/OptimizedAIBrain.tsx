@@ -15,6 +15,7 @@ export const OptimizedAIBrain = memo(({ onSkillSelect }: OptimizedAIBrainProps) 
   const brainRef = useRef<THREE.Group>(null);
   const nodeRefs = useRef<Map<string, THREE.Mesh>>(new Map());
   const connectionRefs = useRef<THREE.Line[]>([]);
+  const timerRef = useRef<THREE.Timer>(new THREE.Timer());
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null);
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
@@ -153,10 +154,10 @@ export const OptimizedAIBrain = memo(({ onSkillSelect }: OptimizedAIBrainProps) 
   const animationFrameRef = useRef<number | undefined>(undefined);
   const lastTimeRef = useRef<number>(0);
 
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (!brainRef.current) return;
 
-    const currentTime = clock.getElapsedTime();
+    const currentTime = timerRef.current.getElapsed() / 1000;
     const deltaTime = currentTime - lastTimeRef.current;
 
     // Throttle animation updates to 60fps

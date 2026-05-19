@@ -104,6 +104,7 @@ export function SkillConstellation() {
   const constellationRef = useRef<THREE.Group>(null);
   const nodeRefs = useRef<Map<string, THREE.Mesh>>(new Map());
   const connectorRefs = useRef<Map<string, THREE.Line>>(new Map());
+  const timerRef = useRef<THREE.Timer>(new THREE.Timer());
 
   // Generate points for skills in orbital rings
   const pointsData = useRef<THREE.Vector3[]>(pointsInOrbitalRings(skillsData));
@@ -201,10 +202,10 @@ export function SkillConstellation() {
   }, [skillsData]);
 
   // Animation loop
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (!constellationRef.current) return;
 
-    const elapsedTime = clock.getElapsedTime();
+    const elapsedTime = timerRef.current.getElapsed() / 1000;
 
     // Slow rotation of the constellation
     constellationRef.current.rotation.y = elapsedTime * 0.05;
