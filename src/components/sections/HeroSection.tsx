@@ -78,7 +78,7 @@ export function HeroSection() {
 
         {/* Subtitle */}
         <p className="max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-[var(--text)]/90 font-medium mb-6 leading-relaxed opacity-0 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-          Building next-generation AI systems that <span className="text-accent-light">perceive, reason, learn,</span> and <span className="text-accent-light">adapt</span> to real world.
+          I build AI solutions that <span className="text-accent-light">perceive, reason, learn,</span> and <span className="text-accent-light">adapt</span> to real world.
         </p>
 
         {/* Typewriter text / Role */}
