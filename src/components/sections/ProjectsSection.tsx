@@ -1,56 +1,61 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Github, ExternalLink } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { TechPill } from "@/components/ui/Badge";
 import { TiltCard } from "@/components/ui/TiltCard";
-import { ProjectGridSkeleton } from "@/components/ui/Skeleton";
 import { useTouchGestures } from "@/hooks/useTouchGestures";
-import dynamic from "next/dynamic";
 import { projects } from "@/data";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types";
 
-// Dynamically import Canvas with SSR disabled
-const Canvas = dynamic(() => import("@react-three/fiber").then((mod) => mod.Canvas), {
-  ssr: false,
-  loading: () => <div className="w-full h-full bg-[var(--card)]/50" />,
-});
-
-// Dynamically import ProjectShowcase with SSR disabled
-const ProjectShowcase = dynamic(() => import("@/components/effects/ProjectShowcase").then((mod) => mod.ProjectShowcase), {
-  ssr: false,
-  loading: () => null,
-});
-
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const isFeatured = project.featured;
+  const cardLink = project.demoUrl ?? project.githubUrl;
+
+  const handleCardClick = () => {
+    if (cardLink) {
+      window.open(cardLink, "_blank", "noopener,noreferrer");
+    }
+  };
 
   return (
-    <Reveal delay={index * 80} className={cn(isFeatured && "md:col-span-2")}>
-      <TiltCard 
-        intensity={20} 
-        scale={1.08}
-        glare={true}
-        className={cn(
-          "card-glow group h-full bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6",
-          "hover:border-accent/40 hover:shadow-glow-sm transition-all duration-300",
-          isFeatured && "border-accent/25 bg-gradient-to-br from-accent/5 to-[var(--card)]"
-        )}
+    <Reveal delay={index * 80} className={cn("h-full", isFeatured && "md:col-span-2")}>
+      <div
+        className={cn("h-full", cardLink && "cursor-pointer")}
+        onClick={cardLink ? handleCardClick : undefined}
+        role={cardLink ? "button" : undefined}
+        tabIndex={cardLink ? 0 : undefined}
+        onKeyDown={cardLink ? (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleCardClick();
+          }
+        } : undefined}
       >
-        <div className="relative z-10 flex flex-col h-full">
-          {/* Type */}
-          <div className="flex items-center gap-2 font-mono text-[0.65rem] text-[var(--accent2)] uppercase tracking-wider mb-3">
-            <span className="text-[0.5rem]">●</span>
-            {project.type}
-            {isFeatured && (
-              <span className="ml-auto text-accent border border-accent/30 bg-accent/10 px-1.5 py-0.5 rounded text-[0.6rem]">
-                Featured
-              </span>
-            )}
-          </div>
+        <TiltCard 
+          intensity={20} 
+          scale={1.08}
+          glare={true}
+          className={cn(
+            "card-glow group h-full bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6",
+            "hover:border-accent/40 hover:shadow-glow-sm transition-all duration-300",
+            isFeatured && "border-accent/25 bg-gradient-to-br from-accent/5 to-[var(--card)]"
+          )}
+        >
+          <div className="relative z-10 flex flex-col h-full">
+            {/* Type */}
+            <div className="flex items-center gap-2 font-mono text-[0.65rem] text-[var(--accent2)] uppercase tracking-wider mb-3">
+              <span className="text-[0.5rem]">●</span>
+              {project.type}
+              {isFeatured && (
+                <span className="ml-auto text-accent border border-accent/30 bg-accent/10 px-1.5 py-0.5 rounded text-[0.6rem]">
+                  Featured
+                </span>
+              )}
+            </div>
 
           {/* Title */}
           <h3 className="font-poppins font-bold text-lg leading-tight mb-3 group-hover:text-accent transition-colors">
@@ -76,7 +81,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 font-mono text-[0.72rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1.5 rounded-lg hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-none"
+                onClick={(event) => event.stopPropagation()}
+                className="flex items-center gap-1.5 font-mono text-[0.72rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1.5 rounded-lg hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-pointer"
               >
                 <Github size={12} /> GitHub
               </a>
@@ -86,7 +92,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 href={project.demoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 font-mono text-[0.72rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1.5 rounded-lg hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-none"
+                onClick={(event) => event.stopPropagation()}
+                className="flex items-center gap-1.5 font-mono text-[0.72rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1.5 rounded-lg hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-pointer"
               >
                 <ExternalLink size={12} /> Demo
               </a>
@@ -94,7 +101,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           </div>
         </div>
       </TiltCard>
-    </Reveal>
+    </div>
+  </Reveal>
   );
 }
 

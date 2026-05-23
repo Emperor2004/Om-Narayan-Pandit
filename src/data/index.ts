@@ -11,32 +11,35 @@ import type {
 
 export const projects: Project[] = [
   {
-    id: "spatial-ai",
-    title: "Spatial AI Digital Twin for Human-Centric Industrial Operations",
-    description:
-      "A Spatial AI digital twin that monitors human activity in industrial environments in real time, combining pose estimation and activity recognition for worker safety and operational efficiency.",
-    longDescription:
-      "This project constructs a digital twin layer over industrial environments by processing live video streams for human activity understanding. Pose estimation models track worker postures and motion trajectories, feeding an activity recognition module that flags unsafe behaviours — such as unauthorised zone entry or ergonomic risk postures — and triggers automated safety alerts. The system is designed with Industry 5.0 human-centric principles in mind, outputting structured spatial event logs consumable by downstream safety dashboards. The architecture is modular, allowing camera feeds from multiple zones to be fused into a unified scene representation.",
-    type: "Computer Vision · Deep Learning",
-    tags: ["PyTorch", "OpenCV", "Pose Estimation", "Activity Recognition", "Python", "Industry 5.0"],
-    featured: true,
-    // githubUrl: "https://github.com/omnarayanpandit",
-    // demoUrl: "#",
-    createdAt: "2026-01-15",
-    status: "prototype",
-  },
+  id: "spatial-ai",
+  title: "Spatial AI Digital Twin for Human-Centric Industrial Operations",
+  description:
+    "A Spatial AI Digital Twin system built for Industry 5.0 environments that uses computer vision, pose estimation, and activity recognition to monitor human activity in real time. The platform creates an intelligent virtual representation of industrial spaces to improve worker safety, detect unsafe actions, analyze movement patterns, and optimize operational efficiency through AI-powered spatial awareness.",
+  type: "Computer Vision · Deep Learning",
+  tags: [
+    "PyTorch",
+    "OpenCV",
+    "Pose Estimation",
+    "Activity Recognition",
+    "Python",
+    "Industry 5.0"
+  ],
+  featured: true,
+  githubUrl: "https://github.com/Emperor2004/Spatial-AI-Digital-Twin",
+  demoUrl: "https://spatial-ai-digital-twin.vercel.app/",
+  createdAt: "2026-01-15",
+  status: "prototype",
+},
 
   {
-    id: "behaverl",
-    title: "BehaveRL — Prospect Theory-Driven RL Trading Agent",
+    id: "behavefinrl",
+    title: "BehaveFinRL — Prospect Theory-Driven RL Trading Agent",
     description:
       "A PPO-based reinforcement learning trading agent shaped by Kahneman-Tversky Prospect Theory, with HMM market-regime detection and KernelSHAP policy explainability.",
-    longDescription:
-      "BehaveRL is a full-stack academic research project combining behavioural economics with deep reinforcement learning. A PPO agent (Stable-Baselines3) is trained on stock data sourced via Alpha Vantage and FRED APIs, with a custom reward function that encodes loss aversion and probability weighting from Prospect Theory (Kahneman-Tversky, 1979). Hidden Markov Models detect market regimes (bull/bear/sideways), dynamically adjusting the agent's risk parameter lambda. KernelSHAP provides post-hoc policy explainability, attributing decisions to input features. A rational baseline agent enables controlled comparison. Results and SHAP attributions are visualised on a dark-themed Flask dashboard. Validation suite reached 88/90 automated checks.",
-    type: "Reinforcement Learning · Quantitative Finance",
-    tags: ["Python", "Stable-Baselines3", "PyTorch", "SHAP", "HMM", "Flask", "Alpha Vantage", "FRED API"],
+    type: "Reinforcement Learning · PL Theory",
+    tags: ["Python", "Stable-Baselines3", "SHAP", "HMM", "Alpha Vantage", "FRED API"],
     featured: false,
-    // githubUrl: "https://github.com/omnarayanpandit",
+    githubUrl: "https://github.com/Emperor2004/BehaveFinRL",
     // demoUrl: "#",
     createdAt: "2026-01-10",
     status: "ongoing",
@@ -47,12 +50,10 @@ export const projects: Project[] = [
     title: "Krishi Sarthi — Voice-First Rural Agriculture Platform",
     description:
       "A voice-first commerce and informal credit platform for rural/semi-urban Indian vendors, built on IndicWhisper ASR with Hindi NLU, a digital udhar ledger, and SMS/USSD fallback.",
-    longDescription:
-      "Bolo Bazaar was conceived at the ET AI Hackathon 2026 to bridge the digital divide for rural vendors with limited literacy or smartphone access. The core pipeline uses IndicWhisper for Hindi automatic speech recognition, feeding a lightweight NLU layer for intent classification (list product, check credit, settle dues). A digital 'udhar' ledger replaces informal paper-based credit tracking between vendors and customers. For feature-phone users, the system degrades gracefully to SMS and USSD flows. The 48-hour implementation strategy included a structured monorepo, phased commit plan with conventional commit tags, and a quantified rural impact model estimating reach across semi-urban Indian markets.",
     type: "NLP · Voice AI · FinTech",
     tags: ["Python", "IndicWhisper", "ASR", "NLU", "Flask", "USSD", "SMS", "Hindi NLP"],
     featured: false,
-    // githubUrl: "https://github.com/omnarayanpandit",
+    githubUrl: "https://github.com/Emperor2004/krishi-sarthi",
     // demoUrl: "#",
     createdAt: "2026-02-17",
     status: "prototype",
@@ -63,12 +64,10 @@ export const projects: Project[] = [
     title: "Plant Disease Detection via Deep Learning — Published Patent",
     description:
       "A CNN-based image classification system that detects and categorises plant diseases from leaf photographs, resulting in a published patent at the Indian Patent Office.",
-    longDescription:
-      "This system uses a convolutional neural network trained on labelled leaf image datasets to identify and classify plant diseases across multiple crop species. The model pipeline includes preprocessing (normalisation, augmentation), a custom CNN architecture with residual connections, and a softmax classification head covering common disease categories. The system achieved strong benchmark accuracy and was designed for deployment on low-resource edge devices used by farmers in the field. The research contribution and novelty of the automated detection method led to a patent publication: 'System and Method for Automated Plant Disease Detection Using Deep Learning Image Classification', Indian Patent Office, December 2025.",
     type: "Computer Vision · Deep Learning",
     tags: ["PyTorch", "CNN", "Image Classification", "OpenCV", "Python", "Edge AI"],
     featured: false,
-    // githubUrl: "https://github.com/omnarayanpandit",
+    // githubUrl: "https://github.com/Emperor2004/Plant-Disease-Detection",
     // demoUrl: "#",
     createdAt: "2025-01-20",
     status: "completed",
@@ -79,13 +78,11 @@ export const projects: Project[] = [
     title: "Financial Awareness Chatbot",
     description:
       "A privacy-focused conversational agent that addresses financial fraud queries and promotes safe digital banking practices for first-time users.",
-    longDescription:
-      "Designed for users new to digital financial services, this chatbot handles a curated intent set covering common fraud scenarios — phishing, UPI scams, fake loan apps, and OTP theft — alongside general safe-banking guidance. The NLU layer is built on a lightweight intent classifier trained on domain-specific conversation data in both English and Hinglish. The system is privacy-first by design: no user data is logged or stored, and all inference runs locally. Responses are structured to be actionable, with clear next steps and escalation paths to official fraud reporting channels. Deployed via a Flask backend with a clean web chat interface.",
     type: "NLP · Conversational AI · FinTech",
     tags: ["Python", "Flask", "NLU", "Intent Classification", "Chatbot", "Hinglish NLP"],
     featured: false,
-    // githubUrl: "https://github.com/omnarayanpandit",
-    // demoUrl: "#",
+    githubUrl: "https://github.com/Emperor2004/Financial-Awareness-Chatbot",
+    demoUrl: "https://financial-awareness-chatbot-ruddy.vercel.app/",
     createdAt: "2025-08-06",
     status: "completed",
   },
@@ -95,12 +92,10 @@ export const projects: Project[] = [
     title: "Blood Bank Management System",
     description:
       "A data-driven blood bank platform with automated inventory tracking, donor matching, and demand forecasting to reduce blood shortage response time.",
-    longDescription:
-      "This full-stack application addresses the operational inefficiencies in blood bank management by automating inventory lifecycle tracking — from donation intake to expiry monitoring. A donor matching module pairs requests with compatible available units in real time. Demand forecasting uses historical request patterns to predict shortages ahead of time, triggering proactive donor outreach. The admin dashboard provides live inventory status, expiry alerts, and request fulfilment metrics. Built with a React frontend, Node.js/Express backend, and MongoDB for flexible document storage, the system is designed to be deployable by small regional blood banks without significant infrastructure investment.",
     type: "Full-Stack · Data Engineering",
     tags: ["React", "Node.js", "Express.js", "MongoDB", "JavaScript", "Data Forecasting"],
     featured: false,
-    // githubUrl: "https://github.com/omnarayanpandit",
+    githubUrl: "https://github.com/Emperor2004/Blood-Bank-Management-Systems",
     // demoUrl: "#",
     createdAt: "2025-02-09",
     status: "completed",

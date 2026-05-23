@@ -4,7 +4,6 @@ export interface Project {
   id: string;
   title: string;
   description: string;
-  longDescription?: string;
   type: string;
   tags: string[];
   featured: boolean;
