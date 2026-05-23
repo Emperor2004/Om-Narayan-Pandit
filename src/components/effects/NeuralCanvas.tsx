@@ -46,33 +46,6 @@ export function NeuralCanvas() {
     };
     window.addEventListener("mousemove", onMouseMove);
 
-    // Interactive particle burst on click
-    const createParticleBurst = (x: number, y: number) => {
-      for (let i = 0; i < 8; i++) {
-        const angle = (Math.PI * 2 * i) / 8;
-        const velocity = 2 + Math.random() * 2;
-        particles.push({
-          x,
-          y,
-          vx: Math.cos(angle) * velocity,
-          vy: Math.sin(angle) * velocity,
-          size: Math.random() * 2 + 1,
-          alpha: 0.8,
-          hue: Math.random() > 0.5 ? secondaryG : primaryG,
-        });
-      }
-      
-      // Remove oldest particles if too many
-      if (particles.length > 30) {
-        particles.splice(0, 8);
-      }
-    };
-
-    const onMouseClick = (e: MouseEvent) => {
-      createParticleBurst(e.clientX, e.clientY);
-    };
-    window.addEventListener("click", onMouseClick);
-
     const onVisibilityChange = () => {
       visibilityRef.current = !document.hidden;
       if (!visibilityRef.current && animRef.current) {
@@ -201,7 +174,6 @@ export function NeuralCanvas() {
       clearTimeout(resizeTimeout);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("click", onMouseClick);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);
