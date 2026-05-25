@@ -9,37 +9,25 @@
 
 /* ─── CSS Variables ──────────────────────────────────────────────────────────── */
 :root {
-  --bg: #030712;
-  --surface: #0d1117;
-  --card: #111827;
-  --border: rgba(99, 102, 241, 0.15);
-  --accent: #6366f1;
-  --accent2: #22d3ee;
-  --accent3: #f472b6;
-  --text: #f1f5f9;
-  --muted: #64748b;
+  --bg: #030408;
+  --surface: #0b1020;
+  --card: #101827;
+
+  --border: rgba(120, 119, 198, 0.18);
+
+  --accent: #7c83ff;
+  --accent2: #3cf2ff;
+  --accent3: #ff6ec7;
+
+  --text: #f5f7ff;
+  --muted: #7b8ba3;
+
   --font-inter: 'Inter', sans-serif;
   --font-jetbrains-mono: 'JetBrains Mono', monospace;
   --font-poppins: 'Poppins', sans-serif;
-  --cyan-glow: #22d3ee;
-  --purple-glow: #f472b6;
-}
 
-.dark {
-  --bg: #030712;
-  --surface: #0d1117;
-  --card: #111827;
-  --text: #f1f5f9;
-  --muted: #64748b;
-}
-
-.light {
-  --bg: #f8fafc;
-  --surface: #ffffff;
-  --card: #f1f5f9;
-  --border: rgba(99, 102, 241, 0.2);
-  --text: #0f172a;
-  --muted: #64748b;
+  --cyan-glow: rgba(60, 242, 255, 0.7);
+  --purple-glow: rgba(255, 110, 199, 0.55);
 }
 
 /* ─── Base ───────────────────────────────────────────────────────────────────── */

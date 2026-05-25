@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useTheme } from "next-themes";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -18,17 +17,12 @@ const navLinks = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const toggleTheme = () => setTheme(resolvedTheme === "dark" ? "light" : "dark");
 
   return (
     <nav
@@ -61,17 +55,6 @@ export function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-3">
-          {/* Theme Toggle */}
-          {mounted && (
-            <button
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-              className="w-8 h-8 flex items-center justify-center rounded-md border border-[var(--border)] text-[var(--muted)] hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-none"
-            >
-              {resolvedTheme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
-            </button>
-          )}
-
           {/* Open to Opportunities Badge */}
           <div className="hidden md:flex items-center gap-2 font-mono text-[0.72rem] text-[var(--accent2)] border border-[var(--accent2)]/30 px-3 py-1.5 rounded-full">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent2)] animate-pulse" />

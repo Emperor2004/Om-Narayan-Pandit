@@ -18,7 +18,6 @@ This repository contains a modern portfolio application that showcases:
 - Responsive portfolio landing page with hero, stats, about, projects, research, blog, education, and contact sections
 - 3D canvas effects using `three`, `@react-three/fiber`, and `@react-three/drei`
 - Smooth animations with `framer-motion`
-- Theme switching powered by `next-themes`
 - Contact form protections: validation, sanitization, and IP-based rate limiting
 - Auto-reply email confirmation for contact submissions
 - Blog listing page at `/blog`

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { AnimatedText } from "@/components/ui/AnimatedText";
 import { Name3D } from "@/components/ui/Name3D";
@@ -15,7 +16,7 @@ export function HeroSection() {
     "Data Science Practitioner",
     "Machine Learning Researcher",
     "Deep Learning Architect",
-    "Computer Vision Enthusiast",
+    "Computer Vision Engineer",
     "Reinforcement Learning Explorer",
     "NLP & Generative AI Engineer"
   ];
@@ -54,58 +55,67 @@ export function HeroSection() {
   }, [rolePhrases.length]);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden font-playwrite-au-tas">
+    <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
       {/* Background is transparent to show global starry animation */}
       <div className="absolute inset-0 bg-transparent pointer-events-none"></div>
 
-      {/* Main Content */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-4 mt-12">
-        
-        {/* Top Badge */}
-        <div className="mb-6 inline-block opacity-0 animate-slide-up" style={{ animationDelay: '0.1s' }}>
-          <div className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-cyan-glow shadow-glow-cyan"></div>
-            <span className="text-[10px] sm:text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
-              ✦ {mounted ? greeting : "GOOD DAY"} · AI/ML ENGINEER
-            </span>
+      <div className="relative z-10 max-w-[1440px] mx-auto px-4 py-16">
+        <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-8 text-center lg:text-left">
+            <div className="inline-block opacity-0 animate-slide-up" style={{ animationDelay: '0.1s' }}>
+              <div className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2 justify-center lg:justify-start">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-glow shadow-glow-cyan"></div>
+                <span className="text-[10px] sm:text-xs tracking-[0.2em] text-[var(--muted)] uppercase">
+                  ✦ {mounted ? greeting : "GOOD DAY"} · AI/ML ENGINEER
+                </span>
+              </div>
+            </div>
+
+            <div className="relative opacity-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+              <Name3D />
+            </div>
+
+            <p className="max-w-2xl mx-auto lg:mx-0 text-lg sm:text-xl md:text-2xl text-[var(--text)]/90 font-medium leading-relaxed opacity-0 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+              I build intelligent solutions that <span className="text-accent-light">perceive, reason, learn,</span> and <span className="text-accent-light">adapt</span> to real world.
+            </p>
+
+            <div className="text-accent-light text-lg sm:text-xl opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+              <AnimatedText
+                text={rolePhrases[roleIndex]}
+                type="typewriter"
+                speed={90}
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center opacity-0 animate-slide-up" style={{ animationDelay: '0.5s' }}>
+              <Link href="#projects" className="px-8 py-3.5 bg-accent hover:bg-accent-light text-white rounded-lg font-medium transition-all shadow-glow hover:shadow-[0_0_30px_rgba(99,102,241,0.6)] flex items-center gap-2 group w-full sm:w-auto justify-center">
+                View My Work
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </Link>
+              <Link href="#contact" className="px-8 py-3.5 bg-transparent border border-white/10 hover:bg-white/5 text-[var(--text)] rounded-lg font-medium transition-all w-full sm:w-auto justify-center">
+                Get In Touch
+              </Link>
+            </div>
           </div>
-        </div>
 
-        {/* Glowing Name */}
-        <div className="mb-8 relative opacity-0 animate-slide-up" style={{ animationDelay: '0.2s' }}>
-          <Name3D />
-        </div>
-
-        {/* Subtitle */}
-        <p className="max-w-2xl mx-auto text-lg sm:text-xl md:text-2xl text-[var(--text)]/90 font-medium mb-6 leading-relaxed opacity-0 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-          I build AI solutions that <span className="text-accent-light">perceive, reason, learn,</span> and <span className="text-accent-light">adapt</span> to real world.
-        </p>
-
-        {/* Typewriter text / Role */}
-        <div className="mb-10 text-accent-light text-lg sm:text-xl opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
-          <AnimatedText
-            text={rolePhrases[roleIndex]}
-            type="typewriter"
-            speed={90}
-          />
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0 animate-slide-up" style={{ animationDelay: '0.5s' }}>
-          <Link href="#projects" className="px-8 py-3.5 bg-accent hover:bg-accent-light text-white rounded-lg font-medium transition-all shadow-glow hover:shadow-[0_0_30px_rgba(99,102,241,0.6)] flex items-center gap-2 group w-full sm:w-auto justify-center">
-            View My Work
-            <span className="group-hover:translate-x-1 transition-transform">→</span>
-          </Link>
-          <Link href="#contact" className="px-8 py-3.5 bg-transparent border border-white/10 hover:bg-white/5 text-[var(--text)] rounded-lg font-medium transition-all w-full sm:w-auto justify-center">
-            Get In Touch
-          </Link>
+          <div className="relative mx-auto w-full max-w-[560px] opacity-0 animate-slide-up" style={{ animationDelay: '0.6s' }}>
+            <div className="overflow-hidden ">
+              <Image
+                src="/assets/images/image.png"
+                alt="Portfolio hero draft"
+                width={1200}
+                height={1200}
+                className="w-full h-auto object-cover [mask-image:radial-gradient(circle_at_center,black_45%,transparent_90%)]"
+                priority
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 animate-fade-in" style={{ animationDelay: '1s' }}>
-        <span className="text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase opacity-50">
-          SCROLL
+        <span className="text-[10px] tracking-[0.2em] text-[var(--text)] uppercase opacity-50">
+          ↑ SCROLL ↑
         </span>
       </div>
     </section>

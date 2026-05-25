@@ -2,15 +2,9 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Navbar } from '../components/layout/Navbar';
 
-const mockSetTheme = vi.fn();
-const mockUseTheme = vi.fn(() => ({ setTheme: mockSetTheme, resolvedTheme: 'dark' }));
-
-vi.mock('next-themes', () => ({ useTheme: () => mockUseTheme() }));
 vi.mock('lucide-react', () => ({
   Menu: () => <div data-testid="menu-icon">Menu</div>,
   X: () => <div data-testid="x-icon">X</div>,
-  Sun: () => <div data-testid="sun-icon">Sun</div>,
-  Moon: () => <div data-testid="moon-icon">Moon</div>,
 }));
 vi.mock('next/link', () => ({
   default: ({ href, children, ...props }: any) => <a href={href} {...props}>{children}</a>,
@@ -31,7 +25,6 @@ beforeEach(() => {
     realRemoveEventListener(type, handler);
   });
   Object.defineProperty(window, 'scrollY', { value: 0, writable: true, configurable: true });
-  mockUseTheme.mockReturnValue({ setTheme: mockSetTheme, resolvedTheme: 'dark' });
   vi.clearAllMocks();
 });
 
@@ -120,36 +113,6 @@ describe('Navbar', () => {
   it('applies logo styling', () => {
     render(<Navbar />);
     expect(screen.getByText('ONP')).toHaveClass('font-poppins', 'font-extrabold', 'text-lg', 'tracking-tight');
-  });
-
-  it('renders theme toggle button after mount', () => {
-    render(<Navbar />);
-    expect(screen.getByLabelText('Toggle theme')).toBeInTheDocument();
-  });
-
-  it('calls setTheme with light when in dark mode', () => {
-    mockUseTheme.mockReturnValue({ setTheme: mockSetTheme, resolvedTheme: 'dark' });
-    render(<Navbar />);
-    fireEvent.click(screen.getByLabelText('Toggle theme'));
-    expect(mockSetTheme).toHaveBeenCalledWith('light');
-  });
-
-  it('calls setTheme with dark when in light mode', () => {
-    mockUseTheme.mockReturnValue({ setTheme: mockSetTheme, resolvedTheme: 'light' });
-    render(<Navbar />);
-    fireEvent.click(screen.getByLabelText('Toggle theme'));
-    expect(mockSetTheme).toHaveBeenCalledWith('dark');
-  });
-
-  it('shows Sun icon in dark mode', () => {
-    render(<Navbar />);
-    expect(screen.getByTestId('sun-icon')).toBeInTheDocument();
-  });
-
-  it('shows Moon icon in light mode', () => {
-    mockUseTheme.mockReturnValue({ setTheme: mockSetTheme, resolvedTheme: 'light' });
-    render(<Navbar />);
-    expect(screen.getByTestId('moon-icon')).toBeInTheDocument();
   });
 
   it('renders mobile menu button', () => {

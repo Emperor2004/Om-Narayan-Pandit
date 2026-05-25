@@ -83,8 +83,8 @@ export function NeuralCanvas() {
         y: Math.random() * window.innerHeight,
         vx: (Math.random() - 0.5) * 0.2,
         vy: (Math.random() - 0.5) * 0.2,
-        size: Math.random() * 1.5 + 0.5,
-        alpha: Math.random() * 0.4 + 0.1,
+        size: Math.random() * 1.5 + 1,
+        alpha: Math.random() * 0.4 + 0.3,
       });
     }
 
@@ -95,7 +95,7 @@ export function NeuralCanvas() {
         vx: (Math.random() - 0.5) * 0.2,
         vy: -Math.random() * 0.4 - 0.1,
         size: Math.random() * 1 + 0.2,
-        alpha: Math.random() * 0.2,
+        alpha: Math.random() * 0.3 + 0.2,
         hue: Math.random() > 0.5 ? secondaryG : primaryG,
       });
     }
@@ -116,7 +116,7 @@ export function NeuralCanvas() {
           const dy = nodes[i].y - nodes[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 120) { // Reduced from 160
-            const alpha = (1 - dist / 120) * 0.08; // Reduced opacity
+            const alpha = (1 - dist / 120) * 0.18; // Reduced opacity
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);

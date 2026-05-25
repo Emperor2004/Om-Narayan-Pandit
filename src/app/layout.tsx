@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Poppins } from "next/font/google";
-import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { PerformanceMonitor } from "@/components/ui/PerformanceMonitor";
@@ -34,7 +33,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      suppressHydrationWarning
       className={`${inter.variable} ${jetbrainsMono.variable} ${poppins.variable}`}
     >
       <head>
@@ -43,14 +41,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body suppressHydrationWarning>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          <ErrorBoundary>
-            <PerformanceMonitor />
-            <ServiceWorkerRegister />
-            {children}
-          </ErrorBoundary>
-        </ThemeProvider>
+      <body>
+        <ErrorBoundary>
+          <PerformanceMonitor />
+          <ServiceWorkerRegister />
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   );
