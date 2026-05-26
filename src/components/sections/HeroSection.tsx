@@ -12,13 +12,15 @@ export function HeroSection() {
   const [roleIndex, setRoleIndex] = useState(0);
 
   const rolePhrases = [
-    "AI Solutions Builder",
+    "AI Engineer",
     "Data Science Practitioner",
     "Machine Learning Researcher",
-    "Deep Learning Architect",
-    "Computer Vision Engineer",
-    "Reinforcement Learning Explorer",
-    "NLP & Generative AI Engineer"
+    "Deep Learning Engineer",
+    "NLP & LLM Engineer",
+    "Computer Vision Specialist",
+    "Generative AI Researcher",
+    "Reinforcement Learning Engineer",
+    "AI × Business Strategy",
   ];
 
   useEffect(() => {
@@ -75,8 +77,9 @@ export function HeroSection() {
               <Name3D />
             </div>
 
-            <p className="max-w-2xl mx-auto lg:mx-0 text-lg sm:text-xl md:text-2xl text-[var(--text)]/90 font-medium leading-relaxed opacity-0 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-              I build intelligent solutions that <span className="text-accent-light">perceive, reason, learn,</span> and <span className="text-accent-light">adapt</span> to real world.
+            <p className="max-w-2xl mx-auto lg:mx-0 text-xl sm:text-2xl md:text-3xl text-[var(--text)]/90 font-semibold leading-relaxed opacity-0 animate-slide-up" style={{ animationDelay: '0.3s' }}>
+              I build <span className="text-accent-light">AI systems</span> that make{" "}
+              <span className="text-accent-light">business sense.</span>
             </p>
 
             <div className="text-accent-light text-lg sm:text-xl opacity-0 animate-slide-up" style={{ animationDelay: '0.4s' }}>
