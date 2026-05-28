@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
 import { Github, ExternalLink } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Reveal } from "@/components/ui/Reveal";
 import { TechPill } from "@/components/ui/Badge";
 import { TiltCard } from "@/components/ui/TiltCard";
-import { useTouchGestures } from "@/hooks/useTouchGestures";
 import { projects } from "@/data";
 import { cn } from "@/lib/utils";
 import type { Project } from "@/types";
@@ -16,36 +14,43 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cardLink = project.demoUrl ?? project.githubUrl;
 
   const handleCardClick = () => {
-    if (cardLink) {
-      window.open(cardLink, "_blank", "noopener,noreferrer");
-    }
+    if (cardLink) window.open(cardLink, "_blank", "noopener,noreferrer");
   };
 
   return (
-    <Reveal delay={index * 80} className={cn("h-full", isFeatured && "md:col-span-2")}>
+    <Reveal
+      delay={index * 80}
+      className={cn("h-full", isFeatured && "md:col-span-2")}
+    >
       <div
         className={cn("h-full", cardLink && "cursor-pointer")}
         onClick={cardLink ? handleCardClick : undefined}
         role={cardLink ? "button" : undefined}
         tabIndex={cardLink ? 0 : undefined}
-        onKeyDown={cardLink ? (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            handleCardClick();
-          }
-        } : undefined}
+        onKeyDown={
+          cardLink
+            ? (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleCardClick();
+                }
+              }
+            : undefined
+        }
       >
-        <TiltCard 
-          intensity={20} 
-          scale={1.08}
+        <TiltCard
+          intensity={8}
+          scale={1.02}
           glare={true}
           className={cn(
             "card-glow group h-full bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6",
             "hover:border-accent/40 hover:shadow-glow-sm transition-all duration-300",
-            isFeatured && "border-accent/25 bg-gradient-to-br from-accent/5 to-[var(--card)]"
+            isFeatured &&
+              "border-accent/25 bg-gradient-to-br from-accent/5 to-[var(--card)]"
           )}
         >
           <div className="relative z-10 flex flex-col h-full">
+
             {/* Type */}
             <div className="flex items-center gap-2 font-mono text-[0.65rem] text-[var(--accent2)] uppercase tracking-wider mb-3">
               <span className="text-[0.5rem]">●</span>
@@ -57,97 +62,73 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               )}
             </div>
 
-          {/* Title */}
-          <h3 className="font-poppins font-bold text-lg leading-tight mb-3 group-hover:text-accent transition-colors">
-            {project.title}
-          </h3>
+            {/* Title */}
+            <h3 className="font-poppins font-bold text-lg leading-tight mb-3 group-hover:text-accent transition-colors">
+              {project.title}
+            </h3>
 
-          {/* Description */}
-          <p className="text-[var(--muted)] text-sm leading-relaxed mb-4 flex-1">
-            {project.description}
-          </p>
+            {/* Description */}
+            <p className="text-[var(--muted)] text-sm leading-relaxed mb-4 flex-1">
+              {project.description}
+            </p>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-1.5 mb-5">
-            {project.tags.map((tag) => (
-              <TechPill key={tag} label={tag} />
-            ))}
+            {/* Tags */}
+            <div className="flex flex-wrap gap-1.5 mb-5">
+              {project.tags.map((tag) => (
+                <TechPill key={tag} label={tag} />
+              ))}
+            </div>
+
+            {/* Links */}
+            <div className="flex items-center gap-3">
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-1.5 font-mono text-[0.72rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1.5 rounded-lg hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-pointer"
+                >
+                  <Github size={12} /> GitHub
+                </a>
+              )}
+              {project.demoUrl && (
+                <a
+                  href={project.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-1.5 font-mono text-[0.72rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1.5 rounded-lg hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-pointer"
+                >
+                  <ExternalLink size={12} /> Demo
+                </a>
+              )}
+            </div>
+
           </div>
-
-          {/* Links */}
-          <div className="flex gap-3">
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(event) => event.stopPropagation()}
-                className="flex items-center gap-1.5 font-mono text-[0.72rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1.5 rounded-lg hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-pointer"
-              >
-                <Github size={12} /> GitHub
-              </a>
-            )}
-            {project.demoUrl && (
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(event) => event.stopPropagation()}
-                className="flex items-center gap-1.5 font-mono text-[0.72rem] text-[var(--muted)] border border-[var(--border)] px-3 py-1.5 rounded-lg hover:text-[var(--accent2)] hover:border-[var(--accent2)] transition-all cursor-pointer"
-              >
-                <ExternalLink size={12} /> Demo
-              </a>
-            )}
-          </div>
-        </div>
-      </TiltCard>
-    </div>
-  </Reveal>
+        </TiltCard>
+      </div>
+    </Reveal>
   );
 }
 
 export function ProjectsSection() {
-  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const projectsRef = useRef<HTMLDivElement>(null);
-
-  // Touch gesture handling for mobile
-  const { isTouchDevice } = useTouchGestures(projectsRef, {
-    swipeLeft: () => {
-      setCurrentProjectIndex(prev => Math.max(0, prev - 1));
-    },
-    swipeRight: () => {
-      setCurrentProjectIndex(prev => Math.min(projects.length - 1, prev + 1));
-    },
-    tap: () => {
-      // Open current project in new tab
-      const currentProject = projects[currentProjectIndex];
-      if (currentProject?.demoUrl) {
-        window.open(currentProject.demoUrl, '_blank');
-      }
-    },
-  });
-
-  
   return (
     <section id="projects" className="py-24 relative z-10">
       <div className="max-w-6xl mx-auto px-6">
         <Reveal>
           <SectionHeader
             label="02 · Projects"
-            title={<>Things I&apos;ve <span className="gradient-text-cyan">built</span></>}
+            title={
+              <>
+                Things I&apos;ve <span className="gradient-text-cyan">built</span>
+              </>
+            }
             subtitle="A selection of projects spanning deep learning, RL, NLP, and applied AI."
           />
         </Reveal>
 
-        {/* Mobile swipe indicators */}
-        {isTouchDevice && (
-          <div className="flex justify-center gap-2 mb-4 text-[var(--muted)] text-sm">
-            <span>← Swipe to navigate</span>
-            <span className="text-[var(--accent)]">Project {currentProjectIndex + 1}/{projects.length}</span>
-          </div>
-        )}
-
-        <div ref={projectsRef} className="grid md:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-3 gap-5">
           {projects.map((project, i) => (
             <ProjectCard key={project.id} project={project} index={i} />
           ))}
