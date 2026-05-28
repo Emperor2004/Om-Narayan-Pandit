@@ -413,8 +413,8 @@ export const achievements: Achievement[] = [
     id: "hackathon",
     icon: "🏆",
     title: "Hackathon Finalist",
-    description: "Finalist in national AI/ML hackathon for intelligent automation solution",
-    year: "2024",
+    description: "Finalist in HACK x ACM for deepfake images detection solution",
+    year: "2025",
   },
   {
     id: "research",
@@ -428,7 +428,7 @@ export const achievements: Achievement[] = [
     icon: "📚",
     title: "3+ Certifications",
     description: "Deep Learning Specialization (Coursera), RL Fundamentals, Advanced NLP",
-    year: "2024",
+    year: "2025",
   },
   {
     id: "opensource",
@@ -445,10 +445,10 @@ export const achievements: Achievement[] = [
     year: "2025",
   },
   {
-    id: "paper",
-    icon: "✍️",
-    title: "Paper Under Review",
-    description: "NLP for cybersecurity paper submitted to international conference",
+    id: "patent",
+    icon: "📄",
+    title: "Patent Filed",
+    description: "Filed patent for Plant Disease Detection system using deep learning",
     year: "2025",
   },
 ];
