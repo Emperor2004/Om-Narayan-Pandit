@@ -27,24 +27,29 @@ export function AboutSection() {
           <Reveal delay={100}>
             <div className="space-y-4 text-[var(--muted)] leading-relaxed">
               <p>
-                I&apos;m <strong className="text-[var(--text)]">Om Narayan Pandit</strong>, an aspiring
-                AI/ML engineer passionate about building intelligent systems that solve real problems —
-                not just impressive demos. My work spans{" "}
-                <strong className="text-[var(--text)]">deep learning, computer vision, NLP, GANs</strong>,
-                and <strong className="text-[var(--text)]">reinforcement learning</strong>.
+                I&apos;m <strong className="text-[var(--text)]">Om Narayan Pandit</strong> — an AI/ML
+                engineer focused on building systems that work{" "}
+                <strong className="text-[var(--text)]">beyond the lab</strong>. My work spans{" "}
+                <strong className="text-[var(--text)]">
+                  computer vision, NLP, generative AI,
+                </strong>{" "}
+                and{" "}
+                <strong className="text-[var(--text)]">reinforcement learning</strong> — always
+                with an eye on feasibility, not just accuracy.
               </p>
               <p>
-                I care deeply about the <strong className="text-[var(--text)]">why</strong> behind AI
-                systems — conceptual intuition, ethical responsibility, and feasibility under real
-                constraints. I&apos;m particularly excited about{" "}
+                What sets me apart: I combine{" "}
+                <strong className="text-[var(--text)]">technical depth</strong> with{" "}
+                <strong className="text-[var(--text)]">business thinking</strong>. Alongside my
+                B.Tech in AIML, I study{" "}
+                <strong className="text-[var(--text)]">Business Management</strong> — because the
+                best AI solutions understand the problem before the model.
+              </p>
+              <p>
+                Currently exploring{" "}
                 <strong className="text-[var(--text)]">NLP for cybersecurity</strong>,{" "}
                 <strong className="text-[var(--text)]">Industry 5.0</strong>, and{" "}
                 <strong className="text-[var(--text)]">spatial intelligence</strong>.
-              </p>
-              <p>
-                Currently in my final year of B.Tech, bridging research and real-world deployment.
-                I believe great AI should be both{" "}
-                <strong className="text-[var(--text)]">novel and actually useful</strong>.
               </p>
             </div>
           </Reveal>

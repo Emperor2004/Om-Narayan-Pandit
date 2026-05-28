@@ -95,7 +95,7 @@ export function HeroSection() {
                 View My Work
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </Link>
-              <Link href="#contact" className="px-8 py-3.5 bg-transparent border border-white/10 hover:bg-white/5 text-[var(--text)] rounded-lg font-medium transition-all w-full sm:w-auto justify-center">
+              <Link href="#contact" className="px-8 py-3.5 bg-transparent border border-white/50 hover:bg-white/5 text-[var(--text)] rounded-lg font-medium transition-all w-full sm:w-auto justify-center">
                 Get In Touch
               </Link>
             </div>

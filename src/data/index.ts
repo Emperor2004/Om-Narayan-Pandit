@@ -36,7 +36,7 @@ export const projects: Project[] = [
     title: "BehaveFinRL — Prospect Theory-Driven RL Trading Agent",
     description:
       "A PPO-based reinforcement learning trading agent shaped by Kahneman-Tversky Prospect Theory, with HMM market-regime detection and KernelSHAP policy explainability.",
-    type: "Reinforcement Learning · PL Theory",
+    type: "Reinforcement Learning · Quantitative Finance",
     tags: ["Python", "Stable-Baselines3", "SHAP", "HMM", "Alpha Vantage", "FRED API"],
     featured: false,
     githubUrl: "https://github.com/Emperor2004/BehaveFinRL",

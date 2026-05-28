@@ -4,7 +4,7 @@ export function Footer() {
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="font-mono text-[0.7rem] text-[var(--muted)]">
           Designed &amp; Built by{" "}
-          <span className="text-accent font-bold">Om Narayan Pandit</span> · 2025
+          <span className="text-accent font-bold">Om Narayan Pandit</span>
         </p>
         <div className="flex items-center gap-6">
           {[
