@@ -78,7 +78,7 @@ export function HeroSection() {
             </div>
 
             <p className="max-w-2xl mx-auto lg:mx-0 text-xl sm:text-2xl md:text-3xl text-[var(--text)]/90 font-semibold leading-relaxed opacity-0 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-              I build AI — from{" "}<span className="text-accent-light">research</span>{" "}to{" "}
+              I build AI systems — from{" "}<span className="text-accent-light">research</span>{" "}to{" "}
               <span className="text-accent-light">deployment.</span>
             </p>
 
