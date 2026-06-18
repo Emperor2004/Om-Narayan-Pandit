@@ -42,11 +42,12 @@ export function ContactSection() {
   };
 
   const socials = [
+    { label: "Download CV", href: "/assets/cv/resume_cv.pdf", icon: "⟡" },
     { label: "GitHub", href: "https://github.com/Emperor2004", icon: "⟡" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/om-narayan-pandit", icon: "⟡" },
     { label: "Research Gate", href: "https://www.researchgate.net/profile/Om-Pandit-2?ev=hdr_xprf", icon: "⟡" },
-    { label: "Medium", href: "https://medium.com/@panditom2003", icon: "⟡" },
-    { label: "Download CV", href: "/assets/cv/resume_cv.pdf", icon: "⟡" },
+    { label: "Leetcode", href: "https://leetcode.com/u/Om_Narayan_Pandit/", icon: "⟡" },
+    { label: "HackerRank", href: "https://www.hackerrank.com/profile/panditom2003", icon: "⟡" },
   ];
 
   return (
